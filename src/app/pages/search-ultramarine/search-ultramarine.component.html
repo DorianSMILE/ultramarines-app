@@ -1,0 +1,23 @@
+<p>search-ultramarine works!</p>
+<table class="table table-striped">
+  <thead class="thead-dark">
+  <tr>
+    <th>ID</th>
+    <th>Nom</th>
+    <th>Grade</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let ultramarine of ultramarines">
+    <td>{{ ultramarine.id }}</td>
+    <td>{{ ultramarine.name }}</td>
+    <td>{{ ultramarine.grade }}</td>
+    <td>
+      <button (click)="updateUltramarine(ultramarine.id)" class="btn btn-warn">
+        <i class="fas fa-times"></i> Modifier
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>

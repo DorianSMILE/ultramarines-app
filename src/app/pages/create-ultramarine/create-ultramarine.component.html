@@ -1,0 +1,11 @@
+<form [formGroup]="ultramarineForm" (ngSubmit)="onSubmit()">
+  <label>Nom :
+    <input type="text" formControlName="name">
+  </label>
+
+  <label>Grade :
+    <input type="text" formControlName="grade">
+  </label>
+
+  <button type="submit">Envoyer</button>
+</form>

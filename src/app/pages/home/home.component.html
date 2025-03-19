@@ -1,0 +1,33 @@
+<div class="container mt-5">
+  <h1 class="text-center">Archives des Ultramarines</h1>
+  <hr>
+
+  <!-- Table des Ultramarines -->
+  <table class="table table-striped">
+    <thead class="thead-dark">
+    <tr>
+      <th>ID</th>
+      <th>Nom</th>
+      <th>Grade</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let ultramarine of ultramarines">
+      <td>{{ ultramarine.id }}</td>
+      <td>{{ ultramarine.name }}</td>
+      <td>{{ ultramarine.grade }}</td>
+      <td>
+        <button (click)="deleteUltramarine(ultramarine.id)" class="btn btn-danger">
+          <i class="fas fa-times"></i> Supprimer
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<div class="container mt-5">
+  <h1 class="text-center">Recrutement</h1>
+  <hr>
+  <app-create-ultramarine (ultramarineCreated)="loadUltramarines()"></app-create-ultramarine>
+</div>
