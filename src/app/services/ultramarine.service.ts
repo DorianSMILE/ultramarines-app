@@ -27,7 +27,6 @@ export class UltramarineService {
 
   // Créer un nouvel ultramarine
   create(ultramarine: UltramarineDTO): Observable<UltramarineDTO> {
-    console.log(`${this.apiUrl}create`, ultramarine)
     return this.http.post<UltramarineDTO>(`${this.apiUrl}create`, ultramarine)
         .pipe(
           catchError((error) => {
