@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { UltramarineDTO } from '../models/ultramarine.dto';
 import { CreateUltramarineComponent } from '../create-ultramarine/create-ultramarine.component';
+import { AuthService } from '../../services/auth-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +18,7 @@ export class HomeComponent implements OnInit {
 
   ultramarines: UltramarineDTO[] = [];
 
-  constructor(private ultramarineService: UltramarineService) {}
+  constructor(private ultramarineService: UltramarineService, private authService: AuthService, private router: Router) {}
 
    ngOnInit() {
      this.loadUltramarines();
@@ -41,6 +43,11 @@ export class HomeComponent implements OnInit {
       } else {
         console.error("L'ID de l'ultramarine est indéfini !");
       }
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 
 }
