@@ -1,0 +1,7 @@
+<label for="role">{{ label }}</label>
+<select id="role" (change)="onSelectRole($event)">
+  <option value="" disabled selected>Sélectionnez un rôle</option>
+  <option *ngFor="let role of roles" [value]="role.roleId">
+    {{ role.role }} ({{ role.roleId }})
+  </option>
+</select>
