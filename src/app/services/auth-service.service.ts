@@ -11,6 +11,7 @@ export class AuthService {
   private apiUrl = 'http://localhost:8080';
   private accessTokenKey = 'access_token';
   private refreshTokenKey = 'refresh_token';
+  private currentUserKey = 'currentUser';
 
   private tokenSubject = new BehaviorSubject<string | null>(null);
 
@@ -21,6 +22,9 @@ export class AuthService {
       tap(response => {
         localStorage.setItem(this.accessTokenKey, response.accessToken);
         localStorage.setItem(this.refreshTokenKey, response.refreshToken);
+        if (response.userResponseDTO) {
+          localStorage.setItem(this.currentUserKey, JSON.stringify(response.userResponseDTO));
+        }
         this.tokenSubject.next(response.accessToken);
       }),
       catchError((error: any) => {
@@ -63,6 +67,12 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem(this.accessTokenKey);
     localStorage.removeItem(this.refreshTokenKey);
+    localStorage.removeItem(this.currentUserKey);
+  }
+
+  getCurrentUser(): any {
+    const userJson = localStorage.getItem(this.currentUserKey);
+    return userJson ? JSON.parse(userJson) : null;
   }
 
 }

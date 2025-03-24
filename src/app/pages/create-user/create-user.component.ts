@@ -32,7 +32,6 @@ export class CreateUserComponent {
       this.userService.createUser(this.userForm.value).subscribe({
         next: (result: UserDTO) => {
           console.log('Utilisateur créé avec succès', result);
-          // Vous pouvez par exemple réinitialiser le formulaire ou rediriger l'utilisateur
         },
         error: (err: any) => console.error('Erreur lors de la création de l\'utilisateur', err)
       });

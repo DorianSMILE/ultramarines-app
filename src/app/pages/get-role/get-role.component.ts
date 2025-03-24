@@ -21,7 +21,6 @@ export class GetRoleComponent implements OnInit {
   ngOnInit(): void {
     this.roleService.getRoles().subscribe({
       next: (roles: RoleDTO[]) => {
-          console.log('Roles reçus :', roles);
           this.roles = roles;
         },
       error: (err: any) => console.error('Erreur lors de la récupération des rôles', err)
