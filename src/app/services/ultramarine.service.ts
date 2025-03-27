@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
-
 interface UltramarineDTO {
   id?: number;
   name: string;
@@ -20,7 +19,7 @@ export class UltramarineService {
 
   constructor(private http: HttpClient) { }
 
-   // Obtenir la liste des ultramarines
+  // Obtenir la liste des ultramarines
   getAll(): Observable<UltramarineDTO[]> {
     return this.http.get<UltramarineDTO[]>(this.apiUrl);
   }
@@ -34,6 +33,27 @@ export class UltramarineService {
             return throwError(() => new Error(error));
           })
         );
+  }
+
+  // Obtenir un ultramarine via son ID
+  getById(id: number): Observable<UltramarineDTO> {
+    return this.http.get<UltramarineDTO>(`${this.apiUrl}${id}`);
+  }
+
+  // Obtenir la liste des ultramarines via name
+  getByName(name: string): Observable<UltramarineDTO[]> {
+    return this.http.get<UltramarineDTO[]>(`${this.apiUrl}search/${name}`);
+  }
+
+  // Update un ultramarine, lié au formulaire update-ultramarine
+  update(ultramarine: UltramarineDTO): Observable<UltramarineDTO> {
+    return this.http.put<UltramarineDTO>(`${this.apiUrl}${ultramarine.id}`, ultramarine)
+      .pipe(
+        catchError((error) => {
+          console.error('Erreur lors de la création de l\'ultramarine:', error);
+          return throwError(() => new Error(error));
+        })
+      );
   }
 
   // Supprimer un ultramarine

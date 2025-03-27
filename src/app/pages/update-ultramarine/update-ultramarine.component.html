@@ -1,0 +1,17 @@
+<div class="update-form">
+  <h3>Modifier l'ultramarine</h3>
+  <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="name">Nom :</label>
+      <input id="name" type="text" formControlName="name">
+    </div>
+    <div>
+      <label for="grade">Grade :</label>
+      <input id="grade" type="text" formControlName="grade">
+    </div>
+    <div>
+      <button type="submit" [disabled]="updateForm.invalid">Valider</button>
+      <button type="button" (click)="onCancel()">Annuler</button>
+    </div>
+  </form>
+</div>

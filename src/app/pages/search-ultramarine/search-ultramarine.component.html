@@ -1,11 +1,18 @@
-<p>search-ultramarine works!</p>
+<form [formGroup]="researchUltramarineForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="username">Nom du marine :</label>
+    <input id="username" formControlName="username" type="text">
+  </div>
+  <button type="submit">Rechercher</button>
+</form>
+
 <table class="table table-striped">
   <thead class="thead-dark">
   <tr>
     <th>ID</th>
     <th>Nom</th>
     <th>Grade</th>
-    <th></th>
+    <th>Actions</th>
   </tr>
   </thead>
   <tbody>
@@ -14,10 +21,16 @@
     <td>{{ ultramarine.name }}</td>
     <td>{{ ultramarine.grade }}</td>
     <td>
-      <!--<button (click)="updateUltramarine(ultramarine.id)" class="btn btn-warn">
+      <button (click)="updateUltramarine(ultramarine.id!)" class="btn btn-warn">
         <i class="fas fa-times"></i> Modifier
-      </button>-->
+      </button>
     </td>
   </tr>
   </tbody>
 </table>
+
+<app-update-ultramarine
+  *ngIf="selectedUltramarine"
+  [ultramarine]="selectedUltramarine"
+  (updateComplete)="handleUpdateComplete($event)">
+</app-update-ultramarine>
