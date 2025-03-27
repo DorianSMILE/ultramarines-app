@@ -8,7 +8,7 @@ import { catchError, tap } from 'rxjs/operators';
 })
 export class AuthService {
 
-  private apiUrl = 'http://localhost:8080';
+  private apiUrl = 'https://localhost:8443';
   private accessTokenKey = 'access_token';
   private refreshTokenKey = 'refresh_token';
   private currentUserKey = 'currentUser';

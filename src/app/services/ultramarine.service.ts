@@ -15,7 +15,7 @@ interface UltramarineDTO {
 })
 export class UltramarineService {
 
-  private apiUrl = 'http://localhost:8080/ultramarines/';
+  private apiUrl = 'https://localhost:8443/ultramarines/';
 
   constructor(private http: HttpClient) { }
 

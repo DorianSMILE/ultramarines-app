@@ -9,7 +9,7 @@ import { RoleDTO } from '../pages/models/role.dto';
 export class RoleService {
   roles: RoleDTO[] = [];
 
-  private apiUrl = 'http://localhost:8080/admin/roles';
+  private apiUrl = 'https://localhost:8443/admin/roles';
 
   constructor(private http: HttpClient) {}
 
