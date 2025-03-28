@@ -42,7 +42,7 @@ export class UltramarineService {
 
   // Obtenir la liste des ultramarines via name
   getByName(name: string): Observable<UltramarineDTO[]> {
-    return this.http.get<UltramarineDTO[]>(`${this.apiUrl}search/${name}`);
+    return this.http.get<UltramarineDTO[]>(`${this.apiUrl}search?name=${name}`);
   }
 
   // Update un ultramarine, lié au formulaire update-ultramarine
