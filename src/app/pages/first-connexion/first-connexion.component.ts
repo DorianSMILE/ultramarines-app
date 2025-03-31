@@ -22,19 +22,21 @@ export class FirstConnexionComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const uuid = this.route.snapshot.paramMap.get('uuid');
-    if (uuid) {
-      this.userService.firstConnexion(uuid).pipe(first()).subscribe(
-        response => {
-          this.message = response;
-          this.router.navigate(['/changePassword'], { queryParams: { uuid: uuid } });
-        },
-        err => {
-          this.error = err.error || 'Une erreur est survenue';
-        }
-      );
-    } else {
-      this.error = 'uuid non fourni dans l’URL.';
-    }
+    this.route.queryParams.subscribe(params => {
+      const uuid = params['uuid'];
+      if (uuid) {
+        this.userService.firstConnexion(uuid).pipe(first()).subscribe(
+          response => {
+            this.message = response;
+            this.router.navigate(['/changePassword'], { queryParams: { uuid: uuid } });
+          },
+          err => {
+            this.error = err.error || 'Une erreur est survenue';
+          }
+        );
+      } else {
+        this.error = 'uuid non fourni dans l’URL.';
+      }
+    });
   }
 }

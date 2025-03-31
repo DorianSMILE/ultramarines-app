@@ -15,7 +15,7 @@ export const routes: Routes = [
   { path: 'create', component: CreateUserComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'search', component: SearchUltramarineComponent, canActivate: [AuthGuard] },
   { path: 'not-authorized', component: NotAuthorizedComponent },
-  { path: 'admin/firstConnexion/:uuid', component: FirstConnexionComponent },
+  { path: 'admin/firstConnexion', component: FirstConnexionComponent },
   { path: 'changePassword', component: ChangePasswordComponent },
   { path: '**', redirectTo: 'login' }
 ];
