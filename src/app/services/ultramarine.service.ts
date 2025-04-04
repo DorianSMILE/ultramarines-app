@@ -47,7 +47,7 @@ export class UltramarineService {
 
   // Update un ultramarine, lié au formulaire update-ultramarine
   update(ultramarine: UltramarineDTO): Observable<UltramarineDTO> {
-    return this.http.put<UltramarineDTO>(`${this.apiUrl}${ultramarine.id}`, ultramarine)
+    return this.http.put<UltramarineDTO>(`${this.apiUrl}`, ultramarine)
       .pipe(
         catchError((error) => {
           console.error('Erreur lors de la création de l\'ultramarine:', error);
