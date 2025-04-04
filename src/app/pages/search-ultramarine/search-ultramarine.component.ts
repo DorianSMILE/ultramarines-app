@@ -55,7 +55,10 @@ export class SearchUltramarineComponent implements OnInit {
   updateUltramarine(id: number): void {
     this.ultramarineService.getById(id).subscribe({
       next: (result: UltramarineDTO) => {
-        this.selectedUltramarine = result;
+        this.selectedUltramarine = null;
+        setTimeout(() => {
+          this.selectedUltramarine = result;
+        }, 0);
       },
       error: (err: any) => console.error('Erreur lors de la récupération de l\'ultramarine', err)
     });
