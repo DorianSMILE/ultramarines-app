@@ -5,13 +5,14 @@ import { UltramarineDTO } from '../models/ultramarine.dto';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { UpdateUltramarineComponent } from '../update-ultramarine/update-ultramarine.component';
+import { UpdateUltramarineEquipmentComponent } from '../update-ultramarine-equipment/update-ultramarine-equipment.component';
 
 @Component({
   selector: 'app-search-ultramarine',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, UpdateUltramarineComponent, ReactiveFormsModule],
+  imports: [CommonModule, HttpClientModule, UpdateUltramarineComponent, UpdateUltramarineEquipmentComponent, ReactiveFormsModule],
   templateUrl: './search-ultramarine.component.html',
-  styleUrl: './search-ultramarine.component.scss'
+  styleUrls: ['./search-ultramarine.component.scss']
 })
 export class SearchUltramarineComponent implements OnInit {
 

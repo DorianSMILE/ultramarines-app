@@ -37,3 +37,9 @@
   [ultramarine]="selectedUltramarine"
   (updateComplete)="handleUpdateComplete($event)">
 </app-update-ultramarine>
+
+<app-update-ultramarine-equipment
+  *ngIf="selectedUltramarine"
+  [ultramarine]="selectedUltramarine"
+  (updateComplete)="handleUpdateComplete($event)">
+</app-update-ultramarine-equipment>

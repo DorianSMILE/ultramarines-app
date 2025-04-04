@@ -1,0 +1,23 @@
+<div>
+  <h3>Mise à jour des équipements</h3>
+
+  <div *ngIf="equipmentTypes.length === 0">
+    Chargement des options...
+  </div>
+
+  <div *ngIf="equipmentTypes.length > 0">
+    <div *ngFor="let type of equipmentTypes">
+      <label>
+        {{ type }} :
+        <select [(ngModel)]="ultramarineEquipments[type]" (ngModelChange)="onEquipmentChange(type, $event)">
+          <option value=""></option>
+          <option *ngFor="let option of availableEquipments[type]" [value]="option">
+            {{ option }}
+          </option>
+        </select>
+      </label>
+    </div>
+  </div>
+
+  <button (click)="updateEquipments()">Enregistrer les équipements</button>
+</div>
