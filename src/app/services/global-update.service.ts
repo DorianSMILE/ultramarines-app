@@ -1,0 +1,17 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { UltramarineDTO } from '../pages/models/ultramarine.dto';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class GlobalUpdateService {
+  private apiUrl = 'https://localhost:8443/ultramarine/global';
+
+  constructor(private http: HttpClient) { }
+
+  updateGlobal(ultramarine: UltramarineDTO): Observable<UltramarineDTO> {
+    return this.http.put<UltramarineDTO>(this.apiUrl, ultramarine);
+  }
+}

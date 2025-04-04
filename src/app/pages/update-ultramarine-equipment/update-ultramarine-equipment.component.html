@@ -9,7 +9,7 @@
     <div *ngFor="let type of equipmentTypes">
       <label>
         {{ type }} :
-        <select [(ngModel)]="ultramarineEquipments[type]" (ngModelChange)="onEquipmentChange(type, $event)">
+        <select [(ngModel)]="localEquipments[type]" (ngModelChange)="emitUpdate()">
           <option value=""></option>
           <option *ngFor="let option of availableEquipments[type]" [value]="option">
             {{ option }}

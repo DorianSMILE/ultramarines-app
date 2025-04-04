@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UltramarineService } from '../../services/ultramarine.service';
+import { GlobalUpdateService } from '../../services/global-update.service';
 import { HttpClientModule } from '@angular/common/http';
 import { UltramarineDTO } from '../models/ultramarine.dto';
 import { CommonModule } from '@angular/common';
@@ -10,7 +11,7 @@ import { UpdateUltramarineEquipmentComponent } from '../update-ultramarine-equip
 @Component({
   selector: 'app-search-ultramarine',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, UpdateUltramarineComponent, UpdateUltramarineEquipmentComponent, ReactiveFormsModule],
+  imports: [CommonModule, HttpClientModule, ReactiveFormsModule, UpdateUltramarineComponent, UpdateUltramarineEquipmentComponent],
   templateUrl: './search-ultramarine.component.html',
   styleUrls: ['./search-ultramarine.component.scss']
 })
@@ -20,7 +21,10 @@ export class SearchUltramarineComponent implements OnInit {
   ultramarines: UltramarineDTO[] = [];
   selectedUltramarine: UltramarineDTO | null = null;
 
-  constructor(private fb: FormBuilder, private ultramarineService: UltramarineService) {
+  updatedInfo: Partial<UltramarineDTO> = {};
+  updatedEquipment: Partial<UltramarineDTO> = {};
+
+  constructor(private fb: FormBuilder, private ultramarineService: UltramarineService, private globalUpdateService: GlobalUpdateService) {
     this.researchUltramarineForm = this.fb.group({
       username: [''],
     });
@@ -53,17 +57,53 @@ export class SearchUltramarineComponent implements OnInit {
   }
 
   updateUltramarine(id: number): void {
-    this.ultramarineService.getById(id).subscribe({
-      next: (result: UltramarineDTO) => {
-        this.selectedUltramarine = null;
-        setTimeout(() => {
-          this.selectedUltramarine = result;
-        }, 0);
-      },
-      error: (err: any) => console.error('Erreur lors de la récupération de l\'ultramarine', err)
-    });
+      this.ultramarineService.getById(id).subscribe({
+        next: (result: UltramarineDTO) => {
+          this.updatedInfo = {};
+          this.updatedEquipment = {};
+          this.selectedUltramarine = null;
+          setTimeout(() => {
+            this.selectedUltramarine = result;
+          }, 0);
+        },
+        error: (err: any) => console.error('Erreur lors de la récupération de l\'ultramarine', err)
+      });
+    }
+
+  handleInfoUpdate(info: Partial<UltramarineDTO>): void {
+    if (this.selectedUltramarine) {
+      this.selectedUltramarine = { ...this.selectedUltramarine, ...info };
+      this.loadUltramarines();
+    }
   }
 
+  handleEquipmentUpdate(equipment: Partial<UltramarineDTO>): void {
+    this.updatedEquipment = { ...this.updatedEquipment, ...equipment };
+    console.log('Equipement mis à jour:', this.updatedEquipment);
+  }
+
+  updateGlobal(): void {
+    if (this.selectedUltramarine) {
+      const completeDTO: UltramarineDTO = {
+        id: this.selectedUltramarine.id,
+        name: this.updatedInfo.name || this.selectedUltramarine.name,
+        grade: this.updatedInfo.grade || this.selectedUltramarine.grade,
+        equipments: this.updatedEquipment.equipments || this.selectedUltramarine.equipments
+      };
+
+      console.log('DTO complet envoyé:', completeDTO);
+      this.globalUpdateService.updateGlobal(completeDTO).subscribe({
+        next: updated => {
+          console.log('Mise à jour globale réussie', updated);
+          this.selectedUltramarine = updated;
+          this.loadUltramarines();
+        },
+        error: err => console.error('Erreur lors de la mise à jour globale', err)
+      });
+    }
+  }
+
+  // Optionnel : une méthode pour fermer la fenêtre de mise à jour si besoin
   handleUpdateComplete(updated: boolean): void {
     this.selectedUltramarine = null;
     if (updated) {

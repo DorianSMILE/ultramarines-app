@@ -25,21 +25,23 @@
     <td>{{ ultramarine.grade }}</td>
     <td>
       <button (click)="updateUltramarine(ultramarine.id!)" class="btn btn-warn">
-        <i class="fas fa-times"></i> Modifier
+        Modifier
       </button>
     </td>
   </tr>
   </tbody>
 </table>
 
-<app-update-ultramarine
-  *ngIf="selectedUltramarine"
-  [ultramarine]="selectedUltramarine"
-  (updateComplete)="handleUpdateComplete($event)">
-</app-update-ultramarine>
+<div *ngIf="selectedUltramarine">
+  <app-update-ultramarine
+    [ultramarine]="selectedUltramarine"
+    (infoUpdate)="handleInfoUpdate($event)">
+  </app-update-ultramarine>
 
-<app-update-ultramarine-equipment
-  *ngIf="selectedUltramarine"
-  [ultramarine]="selectedUltramarine"
-  (updateComplete)="handleUpdateComplete($event)">
-</app-update-ultramarine-equipment>
+  <app-update-ultramarine-equipment
+    [ultramarine]="selectedUltramarine"
+    (equipmentUpdate)="handleEquipmentUpdate($event)">
+  </app-update-ultramarine-equipment>
+
+  <button (click)="updateGlobal()">Mettre à jour globalement</button>
+</div>

@@ -2,6 +2,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { EquipmentService } from '../../services/equipment.service';
+import { GlobalUpdateService } from '../../services/global-update.service';
 import { UltramarineDTO } from '../models/ultramarine.dto';
 
 @Component({
@@ -14,12 +15,12 @@ import { UltramarineDTO } from '../models/ultramarine.dto';
 export class UpdateUltramarineEquipmentComponent implements OnInit {
 
   @Input() ultramarine!: UltramarineDTO;
-  @Output() updateComplete: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() equipmentUpdate: EventEmitter<Partial<UltramarineDTO>> = new EventEmitter<Partial<UltramarineDTO>>();
 
   availableEquipments: { [key: string]: string[] } = {};
-  ultramarineEquipments: { [key: string]: string } = {};
+  localEquipments: { [key: string]: string } = {};
 
-  constructor(private equipmentService: EquipmentService) {}
+  constructor(private equipmentService: EquipmentService, private globalUpdateService: GlobalUpdateService) {}
 
   ngOnInit(): void {
     this.loadAvailableEquipments();
@@ -37,40 +38,43 @@ export class UpdateUltramarineEquipmentComponent implements OnInit {
   }
 
   loadUltramarineEquipments(): void {
-    if (this.ultramarine && this.ultramarine.id != null) {
-      this.equipmentService.getUltramarineEquipments(this.ultramarine.id).subscribe({
-        next: data => {
-          this.ultramarineEquipments = data;
-          console.log('Equipements assignés:', this.ultramarineEquipments);
-        },
-        error: err => console.error(err)
+    if (this.ultramarine && this.ultramarine.id != null && this.ultramarine.equipments) {
+      this.ultramarine.equipments.forEach(equip => {
+        this.localEquipments[equip.equipmentType] = equip.name;
       });
-    }
-  }
-
-  onEquipmentChange(type: string, newValue: string): void {
-    this.ultramarineEquipments[type] = newValue;
-  }
-
-  // Méthode pour déclencher la mise à jour des équipements
-  updateEquipments(): void {
-    if (this.ultramarine && this.ultramarine.id) {
-      this.equipmentService.updateEquipments(this.ultramarine, this.ultramarineEquipments)
-        .subscribe({
-          next: (response) => {
-            console.log('Equipements mis à jour', response);
-            this.updateComplete.emit(true);
-          },
-          error: (error) => {
-            console.error('Erreur lors de la mise à jour des équipements', error);
-            this.updateComplete.emit(false);
-          }
-        });
+      console.log('Equipements assignés initialisés:', this.localEquipments);
     }
   }
 
   get equipmentTypes(): string[] {
     return Object.keys(this.availableEquipments);
+  }
+
+  updateEquipments(): void {
+    const updatedDTO: UltramarineDTO = {
+      id: this.ultramarine.id,
+      name: this.ultramarine.name,
+      grade: this.ultramarine.grade,
+      equipments: Object.keys(this.localEquipments).map(key => ({
+        equipmentType: key,
+        name: this.localEquipments[key]
+      }))
+    };
+
+    this.globalUpdateService.updateGlobal(updatedDTO).subscribe({
+      next: updated => {
+        console.log('Mise à jour globale réussie (équipements) :', updated);
+      },
+      error: err => console.error('Erreur lors de la mise à jour globale (équipements) :', err)
+    });
+  }
+
+  emitUpdate(): void {
+    const equipmentsList = Object.keys(this.localEquipments).map(key => ({
+      equipmentType: key,
+      name: this.localEquipments[key]
+    }));
+    this.equipmentUpdate.emit({ equipments: equipmentsList });
   }
 
 }

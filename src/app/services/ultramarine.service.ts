@@ -45,17 +45,6 @@ export class UltramarineService {
     return this.http.get<UltramarineDTO[]>(`${this.apiUrl}search?name=${name}`);
   }
 
-  // Update un ultramarine, lié au formulaire update-ultramarine
-  update(ultramarine: UltramarineDTO): Observable<UltramarineDTO> {
-    return this.http.put<UltramarineDTO>(`${this.apiUrl}`, ultramarine)
-      .pipe(
-        catchError((error) => {
-          console.error('Erreur lors de la création de l\'ultramarine:', error);
-          return throwError(() => new Error(error));
-        })
-      );
-  }
-
   // Supprimer un ultramarine
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}${id}`);
