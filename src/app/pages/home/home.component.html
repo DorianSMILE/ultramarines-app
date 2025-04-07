@@ -16,6 +16,7 @@
       <th>Nom</th>
       <th>Grade</th>
       <th></th>
+      <th></th>
     </tr>
     </thead>
     <tbody>
@@ -28,6 +29,11 @@
           <i class="fas fa-times"></i> Supprimer
         </button>
       </td>
+      <td>
+        <button (click)="updateUltramarine(ultramarine.id!)" class="btn btn-warn">
+          Modifier
+        </button>
+      </td>
     </tr>
     </tbody>
   </table>
@@ -36,4 +42,11 @@
   <h1 class="text-center">Recrutement</h1>
   <hr>
   <app-create-ultramarine (ultramarineCreated)="loadUltramarines()"></app-create-ultramarine>
+</div>
+
+<div *ngIf="selectedUltramarine">
+  <app-update-ultramarine
+    [ultramarine]="selectedUltramarine"
+    (infoUpdate)="handleInfoUpdate($event)">
+  </app-update-ultramarine>
 </div>

@@ -3,22 +3,30 @@ import { UltramarineService } from '../../services/ultramarine.service';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { UltramarineDTO } from '../models/ultramarine.dto';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CreateUltramarineComponent } from '../create-ultramarine/create-ultramarine.component';
 import { AuthService } from '../../services/auth-service.service';
 import { Router } from '@angular/router';
+import { UpdateUltramarineComponent } from '../update-ultramarine/update-ultramarine.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  imports: [CommonModule, HttpClientModule, CreateUltramarineComponent]
+  imports: [CommonModule, HttpClientModule, ReactiveFormsModule, CreateUltramarineComponent, UpdateUltramarineComponent]
 })
 export class HomeComponent implements OnInit {
 
   ultramarines: UltramarineDTO[] = [];
+  selectedUltramarine: UltramarineDTO | null = null;
 
-  constructor(private ultramarineService: UltramarineService, private authService: AuthService, private router: Router) {}
+  constructor(
+    private ultramarineService: UltramarineService,
+    private authService: AuthService,
+    private router: Router,
+    private fb: FormBuilder
+  ) {}
 
    ngOnInit() {
      this.loadUltramarines();
@@ -50,4 +58,23 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
+  updateUltramarine(id: number): void {
+    this.ultramarineService.getById(id).subscribe({
+      next: (result: UltramarineDTO) => {
+        this.selectedUltramarine = null;
+        setTimeout(() => {
+          this.selectedUltramarine = result;
+        }, 0);
+      },
+      error: (err: any) => console.error('Erreur lors de la récupération de l\'ultramarine', err)
+    });
+  }
+
+  handleInfoUpdate(info: Partial<UltramarineDTO>): void {
+    if (this.selectedUltramarine) {
+      this.selectedUltramarine = { ...this.selectedUltramarine, ...info };
+      console.log('Ultramarine mis à jour dans le parent (infos):', this.selectedUltramarine);
+      this.loadUltramarines();
+    }
+  }
 }

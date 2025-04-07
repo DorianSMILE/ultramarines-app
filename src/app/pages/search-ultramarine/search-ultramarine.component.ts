@@ -57,18 +57,18 @@ export class SearchUltramarineComponent implements OnInit {
   }
 
   updateUltramarine(id: number): void {
-      this.ultramarineService.getById(id).subscribe({
-        next: (result: UltramarineDTO) => {
-          this.updatedInfo = {};
-          this.updatedEquipment = {};
-          this.selectedUltramarine = null;
-          setTimeout(() => {
-            this.selectedUltramarine = result;
-          }, 0);
-        },
-        error: (err: any) => console.error('Erreur lors de la récupération de l\'ultramarine', err)
-      });
-    }
+    this.ultramarineService.getById(id).subscribe({
+      next: (result: UltramarineDTO) => {
+        this.updatedInfo = {};
+        this.updatedEquipment = {};
+        this.selectedUltramarine = null;
+        setTimeout(() => {
+          this.selectedUltramarine = result;
+        }, 0);
+      },
+      error: (err: any) => console.error('Erreur lors de la récupération de l\'ultramarine', err)
+    });
+  }
 
   handleInfoUpdate(info: Partial<UltramarineDTO>): void {
     if (this.selectedUltramarine) {
@@ -91,7 +91,6 @@ export class SearchUltramarineComponent implements OnInit {
         equipments: this.updatedEquipment.equipments || this.selectedUltramarine.equipments
       };
 
-      console.log('DTO complet envoyé:', completeDTO);
       this.globalUpdateService.updateGlobal(completeDTO).subscribe({
         next: updated => {
           console.log('Mise à jour globale réussie', updated);
