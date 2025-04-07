@@ -1,6 +1,6 @@
 <div class="update-form">
   <h3>Modifier l'ultramarine</h3>
-  <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="updateForm" (ngSubmit)="updateInfo()">
     <div>
       <label for="name">Nom :</label>
       <input id="name" type="text" formControlName="name">

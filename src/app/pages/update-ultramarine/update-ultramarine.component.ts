@@ -2,7 +2,7 @@ import { Component, Output, Input, OnInit, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { UltramarineDTO } from '../models/ultramarine.dto';
-import { UltramarineService } from '../../services/ultramarine.service';
+import { GlobalUpdateService } from '../../services/global-update.service';
 
 @Component({
   selector: 'app-update-ultramarine',
@@ -14,16 +14,16 @@ import { UltramarineService } from '../../services/ultramarine.service';
 export class UpdateUltramarineComponent implements OnInit {
 
   @Input() ultramarine!: UltramarineDTO;
-  @Output() updateComplete = new EventEmitter<boolean>();
+  @Output() infoUpdate: EventEmitter<Partial<UltramarineDTO>> = new EventEmitter<Partial<UltramarineDTO>>();
 
   updateForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private ultramarineService: UltramarineService) {
-      this.updateForm = this.fb.group({
-        name: ['', Validators.required],
-        grade: ['', Validators.required]
-      });
-    }
+  constructor(private fb: FormBuilder, private globalUpdateService: GlobalUpdateService) {
+    this.updateForm = this.fb.group({
+      name: ['', Validators.required],
+      grade: ['', Validators.required]
+    });
+  }
 
   ngOnInit(): void {
     if (this.ultramarine) {
@@ -32,29 +32,31 @@ export class UpdateUltramarineComponent implements OnInit {
         grade: this.ultramarine.grade
       });
     }
+    this.updateForm.valueChanges.subscribe(val => {
+      this.infoUpdate.emit(val);
+    });
   }
 
-
-  onSubmit(): void {
-    if (this.updateForm.valid) {
-      const updatedUltramarine: UltramarineDTO = {
-        ...this.ultramarine,
-        ...this.updateForm.value
+  updateInfo(): void {
+    if (this.updateForm.valid && this.ultramarine) {
+      const updatedDTO: UltramarineDTO = {
+        id: this.ultramarine.id,
+        name: this.updateForm.value.name,
+        grade: this.updateForm.value.grade,
+        equipments: null
       };
-      this.ultramarineService.update(updatedUltramarine).subscribe({
-        next: () => {
-          this.updateComplete.emit(true);
+      this.globalUpdateService.updateGlobal(updatedDTO).subscribe({
+        next: updated => {
+          console.log('Mise à jour globale réussie (infos) :', updated);
+          this.infoUpdate.emit({ name: updated.name, grade: updated.grade });
         },
-        error: (error: any) => {
-          console.error('Erreur lors de la mise à jour', error);
-          this.updateComplete.emit(false);
-        }
+        error: err => console.error('Erreur lors de la mise à jour globale (infos) :', err)
       });
     }
   }
 
   onCancel(): void {
-    this.updateComplete.emit(false);
+    this.infoUpdate.emit({});
   }
 
 }
