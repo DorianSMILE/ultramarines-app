@@ -35,7 +35,8 @@
 <div *ngIf="selectedUltramarine">
   <app-update-ultramarine
     [ultramarine]="selectedUltramarine"
-    (infoUpdate)="handleInfoUpdate($event)">
+    (infoUpdate)="handleInfoUpdate($event)"
+    (cancelUpdate)="handleCancelUpdate()">
   </app-update-ultramarine>
 
   <app-update-ultramarine-equipment

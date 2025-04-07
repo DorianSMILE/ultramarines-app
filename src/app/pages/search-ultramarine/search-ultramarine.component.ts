@@ -102,11 +102,8 @@ export class SearchUltramarineComponent implements OnInit {
     }
   }
 
-  // Optionnel : une méthode pour fermer la fenêtre de mise à jour si besoin
-  handleUpdateComplete(updated: boolean): void {
+  handleCancelUpdate(): void {
     this.selectedUltramarine = null;
-    if (updated) {
-      this.loadUltramarines();
-    }
   }
+
 }

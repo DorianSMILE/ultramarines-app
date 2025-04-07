@@ -77,4 +77,9 @@ export class HomeComponent implements OnInit {
       this.loadUltramarines();
     }
   }
+
+  handleCancelUpdate(): void {
+    this.selectedUltramarine = null;
+  }
+
 }
