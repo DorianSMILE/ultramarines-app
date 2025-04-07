@@ -53,14 +53,14 @@ export class UpdateUltramarineEquipmentComponent implements OnInit {
   updateEquipments(): void {
     const updatedDTO: UltramarineDTO = {
       id: this.ultramarine.id,
-      name: this.ultramarine.name,
-      grade: this.ultramarine.grade,
+      name: null,
+      grade: null,
       equipments: Object.keys(this.localEquipments).map(key => ({
         equipmentType: key,
         name: this.localEquipments[key]
       }))
     };
-
+console.log("DTO dans equipement component :" + updatedDTO);
     this.globalUpdateService.updateGlobal(updatedDTO).subscribe({
       next: updated => {
         console.log('Mise à jour globale réussie (équipements) :', updated);

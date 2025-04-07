@@ -12,6 +12,7 @@ export class GlobalUpdateService {
   constructor(private http: HttpClient) { }
 
   updateGlobal(ultramarine: UltramarineDTO): Observable<UltramarineDTO> {
+    console.log("DTO dans global service :" + ultramarine);
     return this.http.put<UltramarineDTO>(this.apiUrl, ultramarine);
   }
 }

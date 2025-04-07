@@ -43,7 +43,7 @@ export class UpdateUltramarineComponent implements OnInit {
         id: this.ultramarine.id,
         name: this.updateForm.value.name,
         grade: this.updateForm.value.grade,
-        equipments: this.ultramarine.equipments
+        equipments: null
       };
       this.globalUpdateService.updateGlobal(updatedDTO).subscribe({
         next: updated => {
