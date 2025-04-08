@@ -41,7 +41,7 @@
 <div class="container mt-5">
   <h1 class="text-center">Recrutement</h1>
   <hr>
-  <app-create-ultramarine (ultramarineCreated)="loadUltramarines()"></app-create-ultramarine>
+  <app-create-ultramarine (ultramarineCreated)="ultramarineStateService.loadUltramarines()"></app-create-ultramarine>
 </div>
 
 <div *ngIf="selectedUltramarine">

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UltramarineService } from '../../services/ultramarine.service';
 import { GlobalUpdateService } from '../../services/global-update.service';
+import { UltramarineStateService } from '../../services/ultramarine-state.service';
 import { BaseUltramarine } from '../../base/base-ultramarine/base-ultramarine';
 import { HttpClientModule } from '@angular/common/http';
 import { UltramarineDTO } from '../models/ultramarine.dto';
@@ -22,10 +23,11 @@ export class SearchUltramarineComponent extends BaseUltramarine {
 
   constructor(
       ultramarineService: UltramarineService,
+      ultramarineStateService: UltramarineStateService,
       private fb: FormBuilder,
       private globalUpdateService: GlobalUpdateService
     ) {
-    super(ultramarineService);
+    super(ultramarineService, ultramarineStateService);
     this.researchUltramarineForm = this.fb.group({
       username: [''],
     });

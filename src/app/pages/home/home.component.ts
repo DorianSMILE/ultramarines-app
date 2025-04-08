@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UltramarineService } from '../../services/ultramarine.service';
+import { UltramarineStateService } from '../../services/ultramarine-state.service';
 import { BaseUltramarine } from '../../base/base-ultramarine/base-ultramarine';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
@@ -21,11 +22,12 @@ export class HomeComponent extends BaseUltramarine {
 
   constructor(
     ultramarineService: UltramarineService,
+    ultramarineStateService: UltramarineStateService,
     private authService: AuthService,
     private router: Router,
     private fb: FormBuilder
   ) {
-      super(ultramarineService);
+      super(ultramarineService, ultramarineStateService);
     }
 
   deleteUltramarine(id?: number): void {

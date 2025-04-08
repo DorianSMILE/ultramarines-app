@@ -1,6 +1,7 @@
 import { Directive, OnInit } from '@angular/core';
 import { UltramarineService } from '../../services/ultramarine.service';
 import { UltramarineDTO } from '../../pages/models/ultramarine.dto';
+import { UltramarineStateService } from '../../services/ultramarine-state.service';
 
 @Directive()
 export abstract class BaseUltramarine implements OnInit {
@@ -9,17 +10,27 @@ export abstract class BaseUltramarine implements OnInit {
   updatedInfo: Partial<UltramarineDTO> = {};
   updatedEquipment: Partial<UltramarineDTO> = {};
 
-  constructor(protected ultramarineService: UltramarineService) {}
+  constructor(
+      protected ultramarineService: UltramarineService,
+      protected ultramarineStateService: UltramarineStateService
+    ) {}
 
   ngOnInit(): void {
-    this.loadUltramarines();
+    this.subscribeToState();
+    this.ultramarineStateService.loadUltramarines();
+  }
+
+  private subscribeToState(): void {
+    this.ultramarineStateService.ultramarines$.subscribe({
+      next: (data) => {
+        this.ultramarines = data;
+      },
+      error: (err) => console.error('Erreur lors de la réception de l\'état des ultramarines', err)
+    });
   }
 
   loadUltramarines(): void {
-    this.ultramarineService.getAll().subscribe({
-      next: (data) => this.ultramarines = data,
-      error: (err) => console.error('Erreur lors du chargement des ultramarines', err)
-    });
+    this.ultramarineStateService.loadUltramarines();
   }
 
   updateUltramarine(id: number): void {
