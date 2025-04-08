@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UltramarineService } from '../../services/ultramarine.service';
 import { GlobalUpdateService } from '../../services/global-update.service';
+import { BaseUltramarine } from '../../base/base-ultramarine/base-ultramarine';
 import { HttpClientModule } from '@angular/common/http';
 import { UltramarineDTO } from '../models/ultramarine.dto';
 import { CommonModule } from '@angular/common';
@@ -15,28 +16,18 @@ import { UpdateUltramarineEquipmentComponent } from '../update-ultramarine-equip
   templateUrl: './search-ultramarine.component.html',
   styleUrls: ['./search-ultramarine.component.scss']
 })
-export class SearchUltramarineComponent implements OnInit {
+export class SearchUltramarineComponent extends BaseUltramarine {
 
   researchUltramarineForm: FormGroup;
-  ultramarines: UltramarineDTO[] = [];
-  selectedUltramarine: UltramarineDTO | null = null;
 
-  updatedInfo: Partial<UltramarineDTO> = {};
-  updatedEquipment: Partial<UltramarineDTO> = {};
-
-  constructor(private fb: FormBuilder, private ultramarineService: UltramarineService, private globalUpdateService: GlobalUpdateService) {
+  constructor(
+      ultramarineService: UltramarineService,
+      private fb: FormBuilder,
+      private globalUpdateService: GlobalUpdateService
+    ) {
+    super(ultramarineService);
     this.researchUltramarineForm = this.fb.group({
       username: [''],
-    });
-  }
-
-  ngOnInit() {
-    this.loadUltramarines();
-  }
-
-  loadUltramarines() {
-    this.ultramarineService.getAll().subscribe(data => {
-      this.ultramarines = data;
     });
   }
 
@@ -53,27 +44,6 @@ export class SearchUltramarineComponent implements OnInit {
           error: (err: any) => console.error('Erreur lors de la recherche', err)
         });
       }
-    }
-  }
-
-  updateUltramarine(id: number): void {
-    this.ultramarineService.getById(id).subscribe({
-      next: (result: UltramarineDTO) => {
-        this.updatedInfo = {};
-        this.updatedEquipment = {};
-        this.selectedUltramarine = null;
-        setTimeout(() => {
-          this.selectedUltramarine = result;
-        }, 0);
-      },
-      error: (err: any) => console.error('Erreur lors de la récupération de l\'ultramarine', err)
-    });
-  }
-
-  handleInfoUpdate(info: Partial<UltramarineDTO>): void {
-    if (this.selectedUltramarine) {
-      this.selectedUltramarine = { ...this.selectedUltramarine, ...info };
-      this.loadUltramarines();
     }
   }
 
@@ -100,10 +70,6 @@ export class SearchUltramarineComponent implements OnInit {
         error: err => console.error('Erreur lors de la mise à jour globale', err)
       });
     }
-  }
-
-  handleCancelUpdate(): void {
-    this.selectedUltramarine = null;
   }
 
 }

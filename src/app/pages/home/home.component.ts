@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UltramarineService } from '../../services/ultramarine.service';
+import { BaseUltramarine } from '../../base/base-ultramarine/base-ultramarine';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { UltramarineDTO } from '../models/ultramarine.dto';
@@ -16,27 +17,16 @@ import { UpdateUltramarineComponent } from '../update-ultramarine/update-ultrama
   styleUrls: ['./home.component.scss'],
   imports: [CommonModule, HttpClientModule, ReactiveFormsModule, CreateUltramarineComponent, UpdateUltramarineComponent]
 })
-export class HomeComponent implements OnInit {
-
-  ultramarines: UltramarineDTO[] = [];
-  selectedUltramarine: UltramarineDTO | null = null;
+export class HomeComponent extends BaseUltramarine {
 
   constructor(
-    private ultramarineService: UltramarineService,
+    ultramarineService: UltramarineService,
     private authService: AuthService,
     private router: Router,
     private fb: FormBuilder
-  ) {}
-
-   ngOnInit() {
-     this.loadUltramarines();
-   }
-
-   loadUltramarines() {
-     this.ultramarineService.getAll().subscribe(data => {
-       this.ultramarines = data;
-     });
-   }
+  ) {
+      super(ultramarineService);
+    }
 
   deleteUltramarine(id?: number): void {
     if (id !== undefined) {
@@ -56,30 +46,6 @@ export class HomeComponent implements OnInit {
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/login']);
-  }
-
-  updateUltramarine(id: number): void {
-    this.ultramarineService.getById(id).subscribe({
-      next: (result: UltramarineDTO) => {
-        this.selectedUltramarine = null;
-        setTimeout(() => {
-          this.selectedUltramarine = result;
-        }, 0);
-      },
-      error: (err: any) => console.error('Erreur lors de la récupération de l\'ultramarine', err)
-    });
-  }
-
-  handleInfoUpdate(info: Partial<UltramarineDTO>): void {
-    if (this.selectedUltramarine) {
-      this.selectedUltramarine = { ...this.selectedUltramarine, ...info };
-      console.log('Ultramarine mis à jour dans le parent (infos):', this.selectedUltramarine);
-      this.loadUltramarines();
-    }
-  }
-
-  handleCancelUpdate(): void {
-    this.selectedUltramarine = null;
   }
 
 }
