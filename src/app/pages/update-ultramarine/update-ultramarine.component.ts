@@ -15,6 +15,7 @@ export class UpdateUltramarineComponent implements OnInit {
 
   @Input() ultramarine!: UltramarineDTO;
   @Output() infoUpdate: EventEmitter<Partial<UltramarineDTO>> = new EventEmitter<Partial<UltramarineDTO>>();
+  @Output() cancelUpdate: EventEmitter<void> = new EventEmitter<void>();
 
   updateForm: FormGroup;
 
@@ -56,7 +57,7 @@ export class UpdateUltramarineComponent implements OnInit {
   }
 
   onCancel(): void {
-    this.infoUpdate.emit({});
+    this.cancelUpdate.emit();
   }
 
 }
