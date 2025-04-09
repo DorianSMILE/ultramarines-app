@@ -1,5 +1,23 @@
+export enum WeightEnum {
+  LIGHT = 'LIGHT',
+  MEDIUM = 'MEDIUM',
+  HEAVY = 'HEAVY'
+}
+
+export enum SupplyEnum {
+  ENERGY = 'ENERGY',
+  FUEL = 'FUEL',
+  NONE = 'NONE'
+}
+
+export enum EquipmentTypeEnum {
+  GUN = 'GUN',
+  SWORD = 'SWORD',
+  ARMOR = 'ARMOR'
+}
+
 export interface EquipmentFilterDTO {
-  weight: string;
-  supply: string;
-  equipmentType: string;
+  weight: WeightEnum;
+  supply: SupplyEnum;
+  equipmentType: EquipmentTypeEnum;
 }
