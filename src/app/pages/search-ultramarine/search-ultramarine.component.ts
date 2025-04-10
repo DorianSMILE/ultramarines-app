@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { UltramarineService } from '../../services/ultramarine.service';
-import { GlobalUpdateService } from '../../services/global-update.service';
-import { UltramarineStateService } from '../../services/ultramarine-state.service';
-import { BaseUltramarine } from '../../base/base-ultramarine/base-ultramarine';
 import { HttpClientModule } from '@angular/common/http';
-import { UltramarineDTO } from '../models/ultramarine.dto';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { UpdateUltramarineComponent } from '../update-ultramarine/update-ultramarine.component';
-import { UpdateUltramarineEquipmentComponent } from '../update-ultramarine-equipment/update-ultramarine-equipment.component';
+import { UltramarineService } from '@services/ultramarine.service';
+import { GlobalUpdateService } from '@services/global-update.service';
+import { UltramarineStateService } from '@services/ultramarine-state.service';
+import { UltramarineDTO } from '@models/ultramarine.dto';
+import { UpdateUltramarineComponent } from '@pages/update-ultramarine/update-ultramarine.component';
+import { UpdateUltramarineEquipmentComponent } from '@pages/update-ultramarine-equipment/update-ultramarine-equipment.component';
+import { BaseUltramarine } from '@base/base-ultramarine/base-ultramarine';
 
 @Component({
   selector: 'app-search-ultramarine',

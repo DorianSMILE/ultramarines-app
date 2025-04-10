@@ -1,9 +1,9 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { EquipmentService } from '../../services/equipment.service';
-import { GlobalUpdateService } from '../../services/global-update.service';
-import { UltramarineDTO } from '../models/ultramarine.dto';
+import { EquipmentService } from '@services/equipment.service';
+import { GlobalUpdateService } from '@services/global-update.service';
+import { UltramarineDTO } from '@models/ultramarine.dto';
 
 @Component({
   selector: 'app-update-ultramarine-equipment',

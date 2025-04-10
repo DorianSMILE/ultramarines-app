@@ -1,9 +1,9 @@
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { UltramarineDTO } from '../pages/models/ultramarine.dto';
-import { EquipmentFilterDTO } from '../pages/models/equipment.filter.dto';
-import { EquipmentDTO } from '../pages/models/equipment.dto';
+import { UltramarineDTO } from '@models/ultramarine.dto';
+import { EquipmentFilterDTO } from '@models/equipment.filter.dto';
+import { EquipmentDTO } from '@models/equipment.dto';
 
 @Injectable({
   providedIn: 'root'

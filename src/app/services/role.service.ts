@@ -1,7 +1,7 @@
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { RoleDTO } from '../pages/models/role.dto';
+import { RoleDTO } from '@models/role.dto';
 
 @Injectable({
   providedIn: 'root'

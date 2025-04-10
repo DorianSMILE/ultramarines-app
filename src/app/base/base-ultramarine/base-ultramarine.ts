@@ -1,7 +1,7 @@
 import { Directive, OnInit } from '@angular/core';
-import { UltramarineService } from '../../services/ultramarine.service';
-import { UltramarineDTO } from '../../pages/models/ultramarine.dto';
-import { UltramarineStateService } from '../../services/ultramarine-state.service';
+import { UltramarineService } from '@services/ultramarine.service';
+import { UltramarineStateService } from '@services/ultramarine-state.service';
+import { UltramarineDTO } from '@models/ultramarine.dto';
 
 @Directive()
 export abstract class BaseUltramarine implements OnInit {

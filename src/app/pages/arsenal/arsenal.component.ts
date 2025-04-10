@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { EquipmentService } from '../../services/equipment.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { EquipmentDTO } from '../models/equipment.dto';
-import { EquipmentFilterDTO } from '../models/equipment.filter.dto';
-import { EquipmentTypeEnum } from '../models/equipment.filter.dto';
-import { SupplyEnum } from '../models/equipment.filter.dto';
-import { WeightEnum } from '../models/equipment.filter.dto';
+import { EquipmentService } from '@services/equipment.service';
+import { EquipmentDTO } from '@models/equipment.dto';
+import { EquipmentFilterDTO } from '@models/equipment.filter.dto';
+import { EquipmentTypeEnum } from '@models/equipment.filter.dto';
+import { SupplyEnum } from '@models/equipment.filter.dto';
+import { WeightEnum } from '@models/equipment.filter.dto';
 
 @Component({
   selector: 'app-arsenal',
@@ -33,7 +33,14 @@ export class ArsenalComponent implements OnInit {
   updateEquipments(): void {
     this.equipmentService.getAllEquipments(this.equipmentFilter).subscribe(
       (data: EquipmentDTO[]) => (this.equipments = data),
-      (error) => console.error('Erreur lors de la récupération des équipements', error)
+      (error) => {
+        if (error.status === 404) {
+          this.equipments = [];
+          console.warn('Aucun équipement trouvé.');
+        } else {
+          console.error('Erreur lors de la récupération des équipements', error);
+        }
+      }
     );
   }
 

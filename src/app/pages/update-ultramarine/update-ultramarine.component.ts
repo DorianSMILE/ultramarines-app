@@ -1,8 +1,8 @@
 import { Component, Output, Input, OnInit, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { UltramarineDTO } from '../models/ultramarine.dto';
-import { GlobalUpdateService } from '../../services/global-update.service';
+import { GlobalUpdateService } from '@services/global-update.service';
+import { UltramarineDTO } from '@models/ultramarine.dto';
 
 @Component({
   selector: 'app-update-ultramarine',

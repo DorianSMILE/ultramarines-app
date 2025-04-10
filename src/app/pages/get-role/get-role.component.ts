@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RoleService } from '../../services/role.service';
-import { RoleDTO } from '../models/role.dto';
+import { RoleService } from '@services/role.service';
+import { RoleDTO } from '@models/role.dto';
 
 @Component({
   selector: 'app-get-role',
