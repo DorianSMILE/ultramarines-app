@@ -1,6 +1,6 @@
 export enum WeightEnum {
   LIGHT = 'LIGHT',
-  MEDIUM = 'MEDIUM',
+  MEDIUM = 'AVERAGE',
   HEAVY = 'HEAVY'
 }
 
@@ -17,7 +17,7 @@ export enum EquipmentTypeEnum {
 }
 
 export interface EquipmentFilterDTO {
-  weight: WeightEnum;
-  supply: SupplyEnum;
-  equipmentType: EquipmentTypeEnum;
+  weight?: WeightEnum;
+  supply?: SupplyEnum;
+  equipmentType?: EquipmentTypeEnum;
 }
