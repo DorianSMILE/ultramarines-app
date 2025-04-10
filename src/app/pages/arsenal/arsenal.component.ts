@@ -33,7 +33,14 @@ export class ArsenalComponent implements OnInit {
   updateEquipments(): void {
     this.equipmentService.getAllEquipments(this.equipmentFilter).subscribe(
       (data: EquipmentDTO[]) => (this.equipments = data),
-      (error) => console.error('Erreur lors de la récupération des équipements', error)
+      (error) => {
+        if (error.status === 404) {
+          this.equipments = [];
+          console.warn('Aucun équipement trouvé.');
+        } else {
+          console.error('Erreur lors de la récupération des équipements', error);
+        }
+      }
     );
   }
 
