@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { UltramarineService } from '../../services/ultramarine.service';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { NewUltramarineDTO } from '../models/newultramarine.dto';
+import { UltramarineService } from '@services/ultramarine.service';
+import { NewUltramarineDTO } from '@models/newultramarine.dto';
 
 @Component({
   selector: 'app-create-ultramarine',

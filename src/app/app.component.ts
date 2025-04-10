@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { RouterOutlet, RouterModule } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
-import { CreateUltramarineComponent } from './pages/create-ultramarine/create-ultramarine.component';
-import { SearchUltramarineComponent } from './pages/search-ultramarine/search-ultramarine.component';
+import { HomeComponent } from '@pages/home/home.component';
+import { CreateUltramarineComponent } from '@pages/create-ultramarine/create-ultramarine.component';
+import { SearchUltramarineComponent } from '@pages/search-ultramarine/search-ultramarine.component';
 
 @Component({
   selector: 'app-root',

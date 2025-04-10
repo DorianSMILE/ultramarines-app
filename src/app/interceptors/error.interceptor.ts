@@ -1,3 +1,5 @@
+import { Observable, throwError, BehaviorSubject } from 'rxjs';
+import { catchError, filter, take, switchMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import {
   HttpInterceptor,
@@ -6,10 +8,8 @@ import {
   HttpEvent,
   HttpErrorResponse
 } from '@angular/common/http';
-import { Observable, throwError, BehaviorSubject } from 'rxjs';
-import { catchError, filter, take, switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { AuthService } from '../services/auth-service.service';
+import { AuthService } from '@services/auth-service.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {

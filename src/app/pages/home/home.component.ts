@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { UltramarineService } from '../../services/ultramarine.service';
-import { UltramarineStateService } from '../../services/ultramarine-state.service';
-import { BaseUltramarine } from '../../base/base-ultramarine/base-ultramarine';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { UltramarineDTO } from '../models/ultramarine.dto';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { CreateUltramarineComponent } from '../create-ultramarine/create-ultramarine.component';
-import { AuthService } from '../../services/auth-service.service';
 import { Router } from '@angular/router';
-import { UpdateUltramarineComponent } from '../update-ultramarine/update-ultramarine.component';
+import { UltramarineService } from '@services/ultramarine.service';
+import { UltramarineStateService } from '@services/ultramarine-state.service';
+import { AuthService } from '@services/auth-service.service';
+import { UltramarineDTO } from '@models/ultramarine.dto';
+import { CreateUltramarineComponent } from '@pages/create-ultramarine/create-ultramarine.component';
+import { UpdateUltramarineComponent } from '@pages/update-ultramarine/update-ultramarine.component';
+import { BaseUltramarine } from '@base/base-ultramarine/base-ultramarine';
 
 @Component({
   selector: 'app-home',

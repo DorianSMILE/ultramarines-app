@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { UltramarineDTO } from '../pages/models/ultramarine.dto';
+import { Injectable } from '@angular/core';
 import { UltramarineService } from './ultramarine.service';
+import { UltramarineDTO } from '@models/ultramarine.dto';
 
 @Injectable({ providedIn: 'root' })
 export class UltramarineStateService {

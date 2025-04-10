@@ -1,7 +1,7 @@
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { UltramarineDTO } from '../pages/models/ultramarine.dto';
+import { UltramarineDTO } from '@models/ultramarine.dto';
 
 @Injectable({
   providedIn: 'root'

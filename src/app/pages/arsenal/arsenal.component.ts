@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { EquipmentService } from '../../services/equipment.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { EquipmentDTO } from '../models/equipment.dto';
-import { EquipmentFilterDTO } from '../models/equipment.filter.dto';
-import { EquipmentTypeEnum } from '../models/equipment.filter.dto';
-import { SupplyEnum } from '../models/equipment.filter.dto';
-import { WeightEnum } from '../models/equipment.filter.dto';
+import { EquipmentService } from '@services/equipment.service';
+import { EquipmentDTO } from '@models/equipment.dto';
+import { EquipmentFilterDTO } from '@models/equipment.filter.dto';
+import { EquipmentTypeEnum } from '@models/equipment.filter.dto';
+import { SupplyEnum } from '@models/equipment.filter.dto';
+import { WeightEnum } from '@models/equipment.filter.dto';
 
 @Component({
   selector: 'app-arsenal',

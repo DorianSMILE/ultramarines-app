@@ -1,8 +1,8 @@
+import { first } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { first } from 'rxjs/operators';
-import { UserService } from '../../services/user.service';
+import { UserService } from '@services/user.service';
 
 @Component({
   selector: 'app-first-connexion',

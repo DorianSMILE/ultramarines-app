@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { GetRoleComponent } from '../get-role/get-role.component';
-import { UserService } from '../../services/user.service';
-import { UserDTO } from '../models/user.dto';
+import { UserService } from '@services/user.service';
+import { UserDTO } from '@models/user.dto';
+import { GetRoleComponent } from '@pages/get-role/get-role.component';
 
 @Component({
   selector: 'app-create-user',
