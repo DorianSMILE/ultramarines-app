@@ -1,0 +1,65 @@
+<div class="container mt-5">
+  <h1 class="text-center">Arsenal</h1>
+  <hr>
+
+  <!-- Filtres -->
+  <div class="row mb-4">
+    <div class="col-md-4">
+      <label for="equipmentType">Type d'équipement</label>
+      <select id="equipmentType" class="form-control"
+              [(ngModel)]="equipmentFilter.equipmentType"
+              (change)="updateEquipments()">
+        <option [ngValue]="null">Tous types</option>
+        <option *ngFor="let type of equipmentTypes" [ngValue]="type">
+          {{ type }}
+        </option>
+      </select>
+    </div>
+
+    <div class="col-md-4">
+      <label for="supply">Carburant</label>
+      <select id="supply" class="form-control"
+              [(ngModel)]="equipmentFilter.supply"
+              (change)="updateEquipments()">
+        <option [ngValue]="null">Tous carburants</option>
+        <option *ngFor="let supply of supplyOptions" [ngValue]="supply">
+          {{ supply }}
+        </option>
+      </select>
+    </div>
+
+    <div class="col-md-4">
+      <label for="weight">Poids</label>
+      <select id="weight" class="form-control"
+              [(ngModel)]="equipmentFilter.weight"
+              (change)="updateEquipments()">
+        <option [ngValue]="null">Tous poids</option>
+        <option *ngFor="let weight of weightOptions" [ngValue]="weight">
+          {{ weight }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Tableau -->
+  <table class="table table-striped">
+    <thead class="thead-dark">
+    <tr>
+      <th>ID</th>
+      <th>Nom</th>
+      <th>Type</th>
+      <th>Carburant</th>
+      <th>Poids</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let equipment of equipments">
+      <td>{{ equipment.id }}</td>
+      <td>{{ equipment.name }}</td>
+      <td>{{ equipment.equipmentType }}</td>
+      <td>{{ equipment.supply }}</td>
+      <td>{{ equipment.weight }}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
