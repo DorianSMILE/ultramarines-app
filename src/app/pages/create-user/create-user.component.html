@@ -1,22 +1,27 @@
 <div class="container mt-5">
-  <h1 class="text-center">Création d'utilisateur</h1>
+  <h1 class="text-center mb-4">Création d'utilisateur</h1>
   <hr>
 
-  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-    <div>
-      <label for="username">Nom d'utilisateur :</label>
-      <input id="username" formControlName="username" type="text">
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="p-4 border rounded shadow-sm bg-light">
+    <div class="mb-3">
+      <label for="username" class="form-label">Nom d'utilisateur :</label>
+      <input id="username" formControlName="username" type="text" class="form-control" placeholder="Entrez un nom d'utilisateur">
     </div>
 
-    <div>
-      <label for="password">Mot de passe :</label>
-      <input id="password" formControlName="password" type="password">
+    <div class="mb-3">
+      <label for="password" class="form-label">Mot de passe :</label>
+      <input id="password" formControlName="password" type="password" class="form-control" placeholder="Entrez un mot de passe">
     </div>
 
-    <div>
-      <app-get-role (roleSelected)="onRoleSelected($event)" [label]="'Choisissez un rôle :'"></app-get-role>
+    <div class="mb-3">
+      <label class="form-label d-block">Choisissez un rôle :</label>
+      <app-get-role (roleSelected)="onRoleSelected($event)" [label]="''"></app-get-role>
     </div>
 
-    <button type="submit" [disabled]="userForm.invalid">Créer l'utilisateur</button>
+    <div class="text-end">
+      <button type="submit" [disabled]="userForm.invalid" class="btn btn-primary">
+        Créer l'utilisateur
+      </button>
+    </div>
   </form>
 </div>
