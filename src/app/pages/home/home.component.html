@@ -51,3 +51,7 @@
     (cancelUpdate)="handleCancelUpdate()">
   </app-update-ultramarine>
 </div>
+<hr>
+<div *ngIf="selectedUltramarine">
+  <app-equipment-authorization [ultramarineId]="selectedUltramarine.id!"></app-equipment-authorization>
+</div>

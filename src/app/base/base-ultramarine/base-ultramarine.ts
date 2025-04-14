@@ -1,7 +1,9 @@
 import { Directive, OnInit } from '@angular/core';
 import { UltramarineService } from '@services/ultramarine.service';
 import { UltramarineStateService } from '@services/ultramarine-state.service';
+import { EquipmentAuthorizationService } from '@services/equipment-authorization.service';
 import { UltramarineDTO } from '@models/ultramarine.dto';
+import { EquipmentAuthorizationDTO } from '@models/equipment.authorization.dto';
 
 @Directive()
 export abstract class BaseUltramarine implements OnInit {
@@ -9,10 +11,12 @@ export abstract class BaseUltramarine implements OnInit {
   selectedUltramarine: UltramarineDTO | null = null;
   updatedInfo: Partial<UltramarineDTO> = {};
   updatedEquipment: Partial<UltramarineDTO> = {};
+  equipmentAuthorization: EquipmentAuthorizationDTO | null = null;
 
   constructor(
       protected ultramarineService: UltramarineService,
-      protected ultramarineStateService: UltramarineStateService
+      protected ultramarineStateService: UltramarineStateService,
+      protected equipmentAuthorizationService: EquipmentAuthorizationService
     ) {}
 
   ngOnInit(): void {
@@ -41,6 +45,7 @@ export abstract class BaseUltramarine implements OnInit {
         this.selectedUltramarine = null;
         setTimeout(() => {
           this.selectedUltramarine = result;
+          this.loadEquipmentAuthorization(result.id!);
         }, 0);
       },
       error: err => console.error('Erreur lors de la récupération de l\'ultramarine', err)
@@ -57,6 +62,19 @@ export abstract class BaseUltramarine implements OnInit {
 
   handleCancelUpdate(): void {
     this.selectedUltramarine = null;
+  }
+
+  loadEquipmentAuthorization(ultramarineId: number): void {
+    this.equipmentAuthorizationService.getAuthorizations(ultramarineId)
+      .subscribe({
+        next: (data: EquipmentAuthorizationDTO) => {
+          this.equipmentAuthorization = data;
+        },
+        error: (err) => {
+          console.error('Erreur lors du chargement des autorisations', err);
+          this.equipmentAuthorization = null;
+        }
+      });
   }
 
 }

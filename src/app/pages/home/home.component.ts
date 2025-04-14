@@ -6,9 +6,11 @@ import { Router } from '@angular/router';
 import { UltramarineService } from '@services/ultramarine.service';
 import { UltramarineStateService } from '@services/ultramarine-state.service';
 import { AuthService } from '@services/auth-service.service';
+import { EquipmentAuthorizationService } from '@services/equipment-authorization.service';
 import { UltramarineDTO } from '@models/ultramarine.dto';
 import { CreateUltramarineComponent } from '@pages/create-ultramarine/create-ultramarine.component';
 import { UpdateUltramarineComponent } from '@pages/update-ultramarine/update-ultramarine.component';
+import { EquipmentAuthorizationComponent } from '@pages/equipment-authorization/equipment-authorization.component';
 import { BaseUltramarine } from '@base/base-ultramarine/base-ultramarine';
 
 @Component({
@@ -16,18 +18,26 @@ import { BaseUltramarine } from '@base/base-ultramarine/base-ultramarine';
   standalone: true,
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  imports: [CommonModule, HttpClientModule, ReactiveFormsModule, CreateUltramarineComponent, UpdateUltramarineComponent]
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    CreateUltramarineComponent,
+    UpdateUltramarineComponent,
+    EquipmentAuthorizationComponent
+  ]
 })
 export class HomeComponent extends BaseUltramarine {
 
   constructor(
     ultramarineService: UltramarineService,
     ultramarineStateService: UltramarineStateService,
+    equipmentAuthorizationService: EquipmentAuthorizationService,
     private authService: AuthService,
     private router: Router,
     private fb: FormBuilder
   ) {
-      super(ultramarineService, ultramarineStateService);
+      super(ultramarineService, ultramarineStateService, equipmentAuthorizationService);
     }
 
   deleteUltramarine(id?: number): void {

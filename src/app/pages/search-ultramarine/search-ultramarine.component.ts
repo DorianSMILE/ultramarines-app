@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { UltramarineService } from '@services/ultramarine.service';
 import { GlobalUpdateService } from '@services/global-update.service';
 import { UltramarineStateService } from '@services/ultramarine-state.service';
+import { EquipmentAuthorizationService } from '@services/equipment-authorization.service';
 import { UltramarineDTO } from '@models/ultramarine.dto';
 import { UpdateUltramarineComponent } from '@pages/update-ultramarine/update-ultramarine.component';
 import { UpdateUltramarineEquipmentComponent } from '@pages/update-ultramarine-equipment/update-ultramarine-equipment.component';
@@ -24,10 +25,11 @@ export class SearchUltramarineComponent extends BaseUltramarine {
   constructor(
       ultramarineService: UltramarineService,
       ultramarineStateService: UltramarineStateService,
+      equipmentAuthorizationService: EquipmentAuthorizationService,
       private fb: FormBuilder,
       private globalUpdateService: GlobalUpdateService
     ) {
-    super(ultramarineService, ultramarineStateService);
+    super(ultramarineService, ultramarineStateService, equipmentAuthorizationService);
     this.researchUltramarineForm = this.fb.group({
       username: [''],
     });
