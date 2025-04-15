@@ -1,3 +1,4 @@
+import { MATERIAL_IMPORTS } from '@app/material';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
@@ -24,7 +25,8 @@ import { BaseUltramarine } from '@base/base-ultramarine/base-ultramarine';
     ReactiveFormsModule,
     CreateUltramarineComponent,
     UpdateUltramarineComponent,
-    EquipmentAuthorizationComponent
+    EquipmentAuthorizationComponent,
+    ...MATERIAL_IMPORTS
   ]
 })
 export class HomeComponent extends BaseUltramarine {

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { EquipmentAuthorizationService } from '@services/equipment-authorization.service';
@@ -11,11 +11,12 @@ import { EquipmentAuthorizationDTO } from '@models/equipment.authorization.dto';
   templateUrl: './equipment-authorization.component.html',
   styleUrls: ['./equipment-authorization.component.scss']
 })
-export class EquipmentAuthorizationComponent implements OnInit {
+export class EquipmentAuthorizationComponent implements OnInit, OnChanges {
 
   @Input() ultramarineId!: number;
   authorizationData?: EquipmentAuthorizationDTO;
   errorMessage: string = '';
+  private lastLoadedId?: number;
 
   constructor(private authService: EquipmentAuthorizationService) {}
 
@@ -25,8 +26,15 @@ export class EquipmentAuthorizationComponent implements OnInit {
     }
   }
 
+  ngOnChanges(): void {
+    if (this.ultramarineId && this.ultramarineId !== this.lastLoadedId) {
+      this.loadAuthorizations();
+    }
+  }
+
   loadAuthorizations(): void {
     this.errorMessage = '';
+    this.lastLoadedId = this.ultramarineId;
     this.authService.getAuthorizations(this.ultramarineId).subscribe({
       next: (data) => {
         this.authorizationData = data;

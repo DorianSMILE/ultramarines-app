@@ -20,7 +20,10 @@ export class UpdateUltramarineEquipmentComponent implements OnInit {
   availableEquipments: { [key: string]: string[] } = {};
   localEquipments: { [key: string]: string } = {};
 
-  constructor(private equipmentService: EquipmentService, private globalUpdateService: GlobalUpdateService) {}
+  constructor(
+    private equipmentService: EquipmentService,
+    private globalUpdateService: GlobalUpdateService
+  ) {}
 
   ngOnInit(): void {
     this.loadAvailableEquipments();
