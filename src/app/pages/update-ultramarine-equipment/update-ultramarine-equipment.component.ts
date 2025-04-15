@@ -60,7 +60,6 @@ export class UpdateUltramarineEquipmentComponent implements OnInit {
         name: this.localEquipments[key]
       }))
     };
-console.log("DTO dans equipement component :" + updatedDTO);
     this.globalUpdateService.updateGlobal(updatedDTO).subscribe({
       next: updated => {
         console.log('Mise à jour globale réussie (équipements) :', updated);
