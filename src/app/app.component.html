@@ -1,30 +1,36 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+<mat-toolbar color="primary" class="shadow-sm">
   <div class="container">
-    <a class="navbar-brand fw-bold" routerLink="/">ULTRAMARINE OPS</a>
+    <a mat-button routerLink="/" class="fw-bold">ULTRAMARINE OPS</a>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu">
+      <mat-icon>menu</mat-icon>
     </button>
 
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/">Accueil</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/create">Créer un user</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/search">Rechercher</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/arsenal">Arsenal</a>
-        </li>
-      </ul>
-    </div>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item routerLink="/">Accueil</button>
+      <button mat-menu-item routerLink="/create">Créer un user</button>
+      <button mat-menu-item routerLink="/search">Rechercher</button>
+      <button mat-menu-item routerLink="/arsenal">Arsenal</button>
+    </mat-menu>
+
+    <div class="spacer"></div>
+
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a mat-button routerLink="/">Accueil</a>
+      </li>
+      <li class="nav-item">
+        <a mat-button routerLink="/create">Créer un user</a>
+      </li>
+      <li class="nav-item">
+        <a mat-button routerLink="/search">Rechercher</a>
+      </li>
+      <li class="nav-item">
+        <a mat-button routerLink="/arsenal">Arsenal</a>
+      </li>
+    </ul>
   </div>
-</nav>
+</mat-toolbar>
 
 <main class="container mt-4">
   <router-outlet></router-outlet>

@@ -1,3 +1,4 @@
+import { MATERIAL_IMPORTS } from '@app/material';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -7,7 +8,7 @@ import { GetRoleComponent } from '@pages/get-role/get-role.component';
 
 @Component({
   selector: 'app-create-user',
-  imports: [CommonModule, ReactiveFormsModule, GetRoleComponent],
+  imports: [CommonModule, ReactiveFormsModule, GetRoleComponent, ...MATERIAL_IMPORTS],
   standalone: true,
   templateUrl: './create-user.component.html',
   styleUrl: './create-user.component.scss'

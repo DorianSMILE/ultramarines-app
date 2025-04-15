@@ -1,0 +1,28 @@
+.container {
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.navbar-nav {
+  display: flex;
+  justify-content: flex-end;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navbar-nav .nav-item {
+  margin-left: 20px;
+}
+
+.spacer {
+  flex-grow: 1;
+  display: flex;
+}
+
+mat-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

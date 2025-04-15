@@ -1,3 +1,4 @@
+import { MATERIAL_IMPORTS } from '@app/material';
 import { first } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
@@ -7,7 +8,7 @@ import { UserService } from '@services/user.service';
 @Component({
   selector: 'app-first-connexion',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, ...MATERIAL_IMPORTS],
   templateUrl: './first-connexion.component.html',
   styleUrl: './first-connexion.component.scss'
 })

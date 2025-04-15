@@ -1,4 +1,5 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { MATERIAL_IMPORTS } from '@app/material';
+import { Component, Input, OnInit, Output, EventEmitter, OnChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { EquipmentService } from '@services/equipment.service';
@@ -7,18 +8,19 @@ import { UltramarineDTO } from '@models/ultramarine.dto';
 
 @Component({
   selector: 'app-update-ultramarine-equipment',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ...MATERIAL_IMPORTS],
   standalone: true,
   templateUrl: './update-ultramarine-equipment.component.html',
   styleUrls: ['./update-ultramarine-equipment.component.scss']
 })
-export class UpdateUltramarineEquipmentComponent implements OnInit {
+export class UpdateUltramarineEquipmentComponent implements OnInit, OnChanges {
 
   @Input() ultramarine!: UltramarineDTO;
   @Output() equipmentUpdate: EventEmitter<Partial<UltramarineDTO>> = new EventEmitter<Partial<UltramarineDTO>>();
 
   availableEquipments: { [key: string]: string[] } = {};
   localEquipments: { [key: string]: string } = {};
+  isPatching: boolean = false;
 
   constructor(
     private equipmentService: EquipmentService,
@@ -30,11 +32,19 @@ export class UpdateUltramarineEquipmentComponent implements OnInit {
     this.loadUltramarineEquipments();
   }
 
+  ngOnChanges(): void {
+    if (this.ultramarine) {
+      this.isPatching = true;
+      this.localEquipments = {};
+      this.loadUltramarineEquipments();
+      setTimeout(() => this.isPatching = false, 0);
+    }
+  }
+
   loadAvailableEquipments(): void {
     this.equipmentService.getEquipmentsByType().subscribe({
       next: data => {
         this.availableEquipments = data;
-        console.log('Equipements disponibles:', this.availableEquipments);
       },
       error: err => console.error(err)
     });
@@ -45,7 +55,6 @@ export class UpdateUltramarineEquipmentComponent implements OnInit {
       this.ultramarine.equipments.forEach(equip => {
         this.localEquipments[equip.equipmentType] = equip.name;
       });
-      console.log('Equipements assignés initialisés:', this.localEquipments);
     }
   }
 

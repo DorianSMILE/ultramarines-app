@@ -1,17 +1,23 @@
 <div class="update-form">
   <h3>Modifier l'ultramarine</h3>
   <form [formGroup]="updateForm" (ngSubmit)="updateInfo()">
-    <div>
-      <label for="name">Nom :</label>
-      <input id="name" type="text" formControlName="name">
+    <div class="form-field">
+      <mat-form-field appearance="fill">
+        <mat-label>Nom</mat-label>
+        <input matInput id="name" type="text" formControlName="name">
+      </mat-form-field>
     </div>
-    <div>
-      <label for="grade">Grade :</label>
-      <input id="grade" type="text" formControlName="grade">
+
+    <div class="form-field">
+      <mat-form-field appearance="fill">
+        <mat-label>Grade</mat-label>
+        <input matInput id="grade" type="text" formControlName="grade">
+      </mat-form-field>
     </div>
-    <div>
-      <button type="submit" [disabled]="updateForm.invalid">Valider</button>
-      <button type="button" (click)="onCancel()">Annuler</button>
+
+    <div class="form-actions">
+      <button mat-raised-button color="primary" type="submit" [disabled]="updateForm.invalid">Valider</button>
+      <button mat-button type="button" (click)="onCancel()">Annuler</button>
     </div>
   </form>
 </div>

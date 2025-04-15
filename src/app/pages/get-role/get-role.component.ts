@@ -1,3 +1,4 @@
+import { MATERIAL_IMPORTS } from '@app/material';
 import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RoleService } from '@services/role.service';
@@ -5,7 +6,7 @@ import { RoleDTO } from '@models/role.dto';
 
 @Component({
   selector: 'app-get-role',
-  imports: [CommonModule],
+  imports: [CommonModule, ...MATERIAL_IMPORTS],
   standalone: true,
   templateUrl: './get-role.component.html',
   styleUrl: './get-role.component.scss'
