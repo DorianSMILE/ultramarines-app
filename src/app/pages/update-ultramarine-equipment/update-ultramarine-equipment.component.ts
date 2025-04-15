@@ -20,7 +20,10 @@ export class UpdateUltramarineEquipmentComponent implements OnInit {
   availableEquipments: { [key: string]: string[] } = {};
   localEquipments: { [key: string]: string } = {};
 
-  constructor(private equipmentService: EquipmentService, private globalUpdateService: GlobalUpdateService) {}
+  constructor(
+    private equipmentService: EquipmentService,
+    private globalUpdateService: GlobalUpdateService
+  ) {}
 
   ngOnInit(): void {
     this.loadAvailableEquipments();
@@ -60,7 +63,6 @@ export class UpdateUltramarineEquipmentComponent implements OnInit {
         name: this.localEquipments[key]
       }))
     };
-console.log("DTO dans equipement component :" + updatedDTO);
     this.globalUpdateService.updateGlobal(updatedDTO).subscribe({
       next: updated => {
         console.log('Mise à jour globale réussie (équipements) :', updated);

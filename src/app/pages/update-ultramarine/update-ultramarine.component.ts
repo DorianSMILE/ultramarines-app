@@ -1,4 +1,4 @@
-import { Component, Output, Input, OnInit, EventEmitter } from '@angular/core';
+import { Component, Output, Input, OnInit, EventEmitter, OnChanges} from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { GlobalUpdateService } from '@services/global-update.service';
@@ -11,12 +11,13 @@ import { UltramarineDTO } from '@models/ultramarine.dto';
   templateUrl: './update-ultramarine.component.html',
   styleUrl: './update-ultramarine.component.scss'
 })
-export class UpdateUltramarineComponent implements OnInit {
+export class UpdateUltramarineComponent implements OnInit, OnChanges {
 
   @Input() ultramarine!: UltramarineDTO;
   @Output() infoUpdate: EventEmitter<Partial<UltramarineDTO>> = new EventEmitter<Partial<UltramarineDTO>>();
   @Output() cancelUpdate: EventEmitter<void> = new EventEmitter<void>();
 
+  isPatching = false;
   updateForm: FormGroup;
 
   constructor(private fb: FormBuilder, private globalUpdateService: GlobalUpdateService) {
@@ -34,8 +35,21 @@ export class UpdateUltramarineComponent implements OnInit {
       });
     }
     this.updateForm.valueChanges.subscribe(val => {
-      this.infoUpdate.emit(val);
+      if (!this.isPatching) {
+        this.infoUpdate.emit(val);
+      }
     });
+  }
+
+  ngOnChanges(): void {
+    if (this.ultramarine) {
+      this.isPatching = true;
+      this.updateForm.patchValue({
+        name: this.ultramarine.name,
+        grade: this.ultramarine.grade
+      });
+      setTimeout(() => this.isPatching = false, 0);
+    }
   }
 
   updateInfo(): void {
