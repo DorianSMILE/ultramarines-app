@@ -49,11 +49,12 @@
       (cancelUpdate)="handleCancelUpdate()">
     </app-update-ultramarine>
 
+    <button mat-raised-button color="accent" (click)="updateGlobal()">Mettre à jour globalement</button>
+
     <app-update-ultramarine-equipment
       [ultramarine]="selectedUltramarine"
       (equipmentUpdate)="handleEquipmentUpdate($event)">
     </app-update-ultramarine-equipment>
   </div>
 
-  <button mat-raised-button color="accent" (click)="updateGlobal()">Mettre à jour globalement</button>
 </div>
