@@ -16,24 +16,20 @@
         <div *ngFor="let category of filterKeys(objectKeys(authorization.supplyAuthorizations))">
           <strong>{{ category }}:</strong>
 
-          <mat-form-field appearance="fill" style="width: 150px; margin-left: 10px;">
-            <mat-select
-              [(ngModel)]="authorization.supplyAuthorizations[category]"
-              (selectionChange)="onSelectionChange(authorization, 'supplyAuthorizations', category)">
-              <mat-option value="illimité">unlimited</mat-option>
-              <mat-option value="unautorized">unautorized</mat-option>
-              <mat-option value="custom">number</mat-option>
-            </mat-select>
-          </mat-form-field>
+          <!-- Select personnalisé -->
+          <select
+            [(ngModel)]="authorization.supplyAuthorizations[category]"
+            (change)="onSelectionChange(authorization, 'supplyAuthorizations', category)">
+            <option value="illimité">unlimited</option>
+            <option value="unautorized">unautorized</option>
+            <option value="custom">number</option>
+          </select>
 
-          <mat-form-field
-            *ngIf="isCustomValue(authorization, 'supplyAuthorizations', category)"
-            appearance="fill"
-            style="width: 100px;">
-            <input matInput type="number"
-                   [(ngModel)]="authorization.supplyAuthorizations[category + '_custom']"
-                   (ngModelChange)="updateCustomValue(authorization, 'supplyAuthorizations', category)">
-          </mat-form-field>
+          <!-- Champ de type number pour "custom" -->
+          <input *ngIf="isCustomValue(authorization, 'supplyAuthorizations', category)"
+                 type="number"
+                 [(ngModel)]="authorization.supplyAuthorizations[category + '_custom']"
+                 (ngModelChange)="updateCustomValue(authorization, 'supplyAuthorizations', category)">
         </div>
       </td>
     </ng-container>
@@ -45,24 +41,20 @@
         <div *ngFor="let category of filterKeys(objectKeys(authorization.weightAuthorizations))">
           <strong>{{ category }}:</strong>
 
-          <mat-form-field appearance="fill" style="width: 150px; margin-left: 10px;">
-            <mat-select
-              [(ngModel)]="authorization.weightAuthorizations[category]"
-              (selectionChange)="onSelectionChange(authorization, 'weightAuthorizations', category)">
-              <mat-option value="illimité">unlimited</mat-option>
-              <mat-option value="unautorized">unautorized</mat-option>
-              <mat-option value="custom">number</mat-option>
-            </mat-select>
-          </mat-form-field>
+          <!-- Select personnalisé -->
+          <select
+            [(ngModel)]="authorization.weightAuthorizations[category]"
+            (change)="onSelectionChange(authorization, 'weightAuthorizations', category)">
+            <option value="illimité">unlimited</option>
+            <option value="unautorized">unautorized</option>
+            <option value="custom">number</option>
+          </select>
 
-          <mat-form-field
-            *ngIf="isCustomValue(authorization, 'weightAuthorizations', category)"
-            appearance="fill"
-            style="width: 100px;">
-            <input matInput type="number"
-                   [(ngModel)]="authorization.weightAuthorizations[category + '_custom']"
-                   (ngModelChange)="updateCustomValue(authorization, 'weightAuthorizations', category)">
-          </mat-form-field>
+          <!-- Champ de type number pour "custom" -->
+          <input *ngIf="isCustomValue(authorization, 'weightAuthorizations', category)"
+                 type="number"
+                 [(ngModel)]="authorization.weightAuthorizations[category + '_custom']"
+                 (ngModelChange)="updateCustomValue(authorization, 'weightAuthorizations', category)">
         </div>
       </td>
     </ng-container>
