@@ -13,8 +13,27 @@
     <ng-container matColumnDef="supplyAuthorizations">
       <th mat-header-cell *matHeaderCellDef>Supply Authorizations</th>
       <td mat-cell *matCellDef="let authorization">
-        <div *ngFor="let category of objectKeys(authorization.supplyAuthorizations)">
-          <strong>{{ category }}:</strong> {{ authorization.supplyAuthorizations[category] }}
+        <div *ngFor="let category of filterKeys(objectKeys(authorization.supplyAuthorizations))">
+          <strong>{{ category }}:</strong>
+
+          <mat-form-field appearance="fill" style="width: 150px; margin-left: 10px;">
+            <mat-select
+              [(ngModel)]="authorization.supplyAuthorizations[category]"
+              (selectionChange)="onSelectionChange(authorization, 'supplyAuthorizations', category)">
+              <mat-option value="illimité">unlimited</mat-option>
+              <mat-option value="unautorized">unautorized</mat-option>
+              <mat-option value="custom">number</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field
+            *ngIf="isCustomValue(authorization, 'supplyAuthorizations', category)"
+            appearance="fill"
+            style="width: 100px;">
+            <input matInput type="number"
+                   [(ngModel)]="authorization.supplyAuthorizations[category + '_custom']"
+                   (ngModelChange)="updateCustomValue(authorization, 'supplyAuthorizations', category)">
+          </mat-form-field>
         </div>
       </td>
     </ng-container>
@@ -23,8 +42,27 @@
     <ng-container matColumnDef="weightAuthorizations">
       <th mat-header-cell *matHeaderCellDef>Weight Authorizations</th>
       <td mat-cell *matCellDef="let authorization">
-        <div *ngFor="let category of objectKeys(authorization.weightAuthorizations)">
-          <strong>{{ category }}:</strong> {{ authorization.weightAuthorizations[category] }}
+        <div *ngFor="let category of filterKeys(objectKeys(authorization.weightAuthorizations))">
+          <strong>{{ category }}:</strong>
+
+          <mat-form-field appearance="fill" style="width: 150px; margin-left: 10px;">
+            <mat-select
+              [(ngModel)]="authorization.weightAuthorizations[category]"
+              (selectionChange)="onSelectionChange(authorization, 'weightAuthorizations', category)">
+              <mat-option value="illimité">unlimited</mat-option>
+              <mat-option value="unautorized">unautorized</mat-option>
+              <mat-option value="custom">number</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field
+            *ngIf="isCustomValue(authorization, 'weightAuthorizations', category)"
+            appearance="fill"
+            style="width: 100px;">
+            <input matInput type="number"
+                   [(ngModel)]="authorization.weightAuthorizations[category + '_custom']"
+                   (ngModelChange)="updateCustomValue(authorization, 'weightAuthorizations', category)">
+          </mat-form-field>
         </div>
       </td>
     </ng-container>
