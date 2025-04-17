@@ -7,6 +7,7 @@ import { SearchUltramarineComponent } from '@pages/search-ultramarine/search-ult
 import { NotAuthorizedComponent } from '@pages/not-authorized/not-authorized.component';
 import { FirstConnexionComponent } from '@pages/first-connexion/first-connexion.component';
 import { ChangePasswordComponent } from '@pages/change-password/change-password.component';
+import { AuthorizationEquipmentUltramarineComponent } from '@pages/authorization-equipment-ultramarine/authorization-equipment-ultramarine.component';
 import { AuthGuard } from '@guards/auth.guard';
 import { AdminGuard } from '@guards/auth/admin.guard';
 
@@ -14,6 +15,7 @@ export const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'arsenal', component: ArsenalComponent, canActivate: [AuthGuard, AdminGuard] },
+  { path: 'authorization/equipment', component: AuthorizationEquipmentUltramarineComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'create', component: CreateUserComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'search', component: SearchUltramarineComponent, canActivate: [AuthGuard] },
   { path: 'not-authorized', component: NotAuthorizedComponent },

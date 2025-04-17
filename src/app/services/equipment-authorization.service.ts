@@ -19,4 +19,8 @@ export class EquipmentAuthorizationService {
     );
   }
 
+  getAllAuthorizations(): Observable<EquipmentAuthorizationDTO[]> {
+    return this.http.get<EquipmentAuthorizationDTO[]>(`${this.baseUrl}`);
+  }
+
 }
