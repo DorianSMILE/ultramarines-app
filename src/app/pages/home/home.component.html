@@ -4,6 +4,12 @@
   </button>
 </div>
 
+<div class="mat-elevation-z4 p-4 mt-5">
+  <h1 class="text-center">Recrutement</h1>
+  <mat-divider></mat-divider>
+  <app-create-ultramarine (ultramarineCreated)="ultramarineStateService.loadUltramarines()"></app-create-ultramarine>
+</div>
+
 <div class="mat-elevation-z4 p-4">
   <h1 class="text-center">Archives des Ultramarines</h1>
   <mat-divider></mat-divider>
@@ -51,12 +57,6 @@
     <tr mat-header-row *matHeaderRowDef="['id', 'name', 'grade', 'delete', 'update']"></tr>
     <tr mat-row *matRowDef="let row; columns: ['id', 'name', 'grade', 'delete', 'update'];"></tr>
   </table>
-</div>
-
-<div class="mat-elevation-z4 p-4 mt-5">
-  <h1 class="text-center">Recrutement</h1>
-  <mat-divider></mat-divider>
-  <app-create-ultramarine (ultramarineCreated)="ultramarineStateService.loadUltramarines()"></app-create-ultramarine>
 </div>
 
 <ng-container *ngIf="selectedUltramarine">
