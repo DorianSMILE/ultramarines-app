@@ -93,7 +93,15 @@ export class AuthorizationEquipmentUltramarineComponent implements OnInit {
     this.replaceCustomValues(authorization.supplyAuthorizations);
     this.replaceCustomValues(authorization.weightAuthorizations);
     this.equipmentAuthorizationService.updateAuthorization(authorization).subscribe({
-      next: (updated) => console.log('Mise à jour réussie', updated),
+      next: (updated) => {
+        console.log('Mise à jour réussie', updated),
+        this.preprocessAuthorizations([updated]);
+        const index = this.authorizations.findIndex(a => a.ultramarineId === updated.ultramarineId);
+        if (index !== -1) {
+          this.authorizations[index] = updated;
+          this.dataSource.data = [...this.authorizations];
+        }
+      },
       error: (err) => console.error('Erreur lors de la mise à jour', err)
     });
   }
