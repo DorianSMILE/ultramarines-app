@@ -3,6 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 import { EquipmentAuthorizationService } from '@services/equipment-authorization.service';
 import { EquipmentAuthorizationDTO } from '@models/equipment.authorization.dto';
 
@@ -17,7 +18,7 @@ export class AuthorizationEquipmentUltramarineComponent implements OnInit {
 
   authorizations: EquipmentAuthorizationDTO[] = [];
   dataSource = new MatTableDataSource<EquipmentAuthorizationDTO>(this.authorizations);
-  displayedColumns: string[] = ['ultramarineId', 'supplyAuthorizations', 'weightAuthorizations'];
+  displayedColumns: string[] = ['ultramarineId', 'supplyAuthorizations', 'weightAuthorizations', 'actions'];
 
   constructor(private equipmentAuthorizationService: EquipmentAuthorizationService) {}
 
@@ -25,7 +26,7 @@ export class AuthorizationEquipmentUltramarineComponent implements OnInit {
     this.equipmentAuthorizationService.getAllAuthorizations().subscribe(
       (data) => {
         this.authorizations = data;
-        this.preprocessAuthorizations(this.authorizations); // ✔️
+        this.preprocessAuthorizations(this.authorizations);
         this.dataSource.data = this.authorizations;
       },
       (error) => {
@@ -51,20 +52,19 @@ export class AuthorizationEquipmentUltramarineComponent implements OnInit {
     const currentValue = authorization[section][category];
     const customKey = `${category}_custom`;
 
-    if (currentValue === 'custom') {
-      if (!authorization[section][customKey] && !isNaN(currentValue)) {
-        // Si un nombre était défini avant, le remettre dans le champ custom
-        authorization[section][customKey] = Number(currentValue);
-      }
+    console.log('current : ', currentValue);
+    console.log('custom : ', customKey);
+
+    if (currentValue !== 'custom') {
+      delete authorization[section][customKey];
     }
   }
+
 
   updateCustomValue(authorization: any, section: string, category: string): void {
     const customKey = `${category}_custom`;
     const customValue = authorization[section][customKey];
-    if (customValue !== undefined && customValue !== null) {
-      authorization[section][category] = customValue.toString();
-    }
+    console.log(`Valeur custom entrée pour ${section} - ${category} :`, customValue);
   }
 
   preprocessAuthorizations(authorizations: EquipmentAuthorizationDTO[]) {
@@ -86,6 +86,31 @@ export class AuthorizationEquipmentUltramarineComponent implements OnInit {
           authorization.weightAuthorizations[key + '_custom'] = String(value);
         }
       });
+    });
+  }
+
+  updateAuthorization(authorization: EquipmentAuthorizationDTO): void {
+    this.replaceCustomValues(authorization.supplyAuthorizations);
+    this.replaceCustomValues(authorization.weightAuthorizations);
+    this.equipmentAuthorizationService.updateAuthorization(authorization).subscribe({
+      next: (updated) => console.log('Mise à jour réussie', updated),
+      error: (err) => console.error('Erreur lors de la mise à jour', err)
+    });
+  }
+
+  private replaceCustomValues(section: any): void {
+    this.objectKeys(section).forEach((key) => {
+      if (key.endsWith('_custom')) return;
+      if (section[key] === 'custom') {
+        const customKey = `${key}_custom`;
+        const customValue = section[customKey];
+        if (customValue !== undefined && !isNaN(customValue)) {
+          section[key] = customValue.toString();
+        } else {
+          section[key] = 'unautorized';
+        }
+        delete section[customKey];
+      }
     });
   }
 
