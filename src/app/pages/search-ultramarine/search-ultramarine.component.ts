@@ -1,3 +1,4 @@
+import { MATERIAL_IMPORTS } from '@app/material';
 import { Component, OnInit } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
@@ -14,11 +15,20 @@ import { BaseUltramarine } from '@base/base-ultramarine/base-ultramarine';
 @Component({
   selector: 'app-search-ultramarine',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, ReactiveFormsModule, UpdateUltramarineComponent, UpdateUltramarineEquipmentComponent],
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    UpdateUltramarineComponent,
+    UpdateUltramarineEquipmentComponent,
+    ...MATERIAL_IMPORTS
+    ],
   templateUrl: './search-ultramarine.component.html',
   styleUrls: ['./search-ultramarine.component.scss']
 })
 export class SearchUltramarineComponent extends BaseUltramarine {
+
+  displayedColumns: string[] = ['id', 'name', 'grade', 'actions'];
 
   researchUltramarineForm: FormGroup;
 

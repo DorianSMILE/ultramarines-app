@@ -1,3 +1,4 @@
+import { MATERIAL_IMPORTS } from '@app/material';
 import { Component, Output, Input, OnInit, EventEmitter, OnChanges} from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -7,7 +8,7 @@ import { UltramarineDTO } from '@models/ultramarine.dto';
 @Component({
   selector: 'app-update-ultramarine',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, ...MATERIAL_IMPORTS],
   templateUrl: './update-ultramarine.component.html',
   styleUrl: './update-ultramarine.component.scss'
 })

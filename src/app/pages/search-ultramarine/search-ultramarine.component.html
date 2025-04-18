@@ -1,48 +1,60 @@
 <h1 class="text-center">Recherche</h1>
 <hr>
 <form [formGroup]="researchUltramarineForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="username">Nom du marine :</label>
-    <input id="username" formControlName="username" type="text">
-  </div>
-  <button type="submit">Rechercher</button>
+  <mat-form-field appearance="fill" class="w-100">
+    <mat-label>Nom du marine</mat-label>
+    <input matInput id="username" formControlName="username" type="text">
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit">Rechercher</button>
 </form>
+
 <h1 class="text-center">Liste</h1>
 <hr>
-<table class="table table-striped">
-  <thead class="thead-dark">
-  <tr>
-    <th>ID</th>
-    <th>Nom</th>
-    <th>Grade</th>
-    <th>Actions</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let ultramarine of ultramarines">
-    <td>{{ ultramarine.id }}</td>
-    <td>{{ ultramarine.name }}</td>
-    <td>{{ ultramarine.grade }}</td>
-    <td>
-      <button (click)="updateUltramarine(ultramarine.id!)" class="btn btn-warn">
+
+<mat-table [dataSource]="ultramarines" class="mat-elevation-z8">
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef>ID</th>
+    <td mat-cell *matCellDef="let ultramarine">{{ ultramarine.id }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>Nom</th>
+    <td mat-cell *matCellDef="let ultramarine">{{ ultramarine.name }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="grade">
+    <th mat-header-cell *matHeaderCellDef>Grade</th>
+    <td mat-cell *matCellDef="let ultramarine">{{ ultramarine.grade }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>Actions</th>
+    <td mat-cell *matCellDef="let ultramarine">
+      <button mat-button color="warn" (click)="updateUltramarine(ultramarine.id!)">
         Modifier
       </button>
     </td>
-  </tr>
-  </tbody>
-</table>
+  </ng-container>
 
-<div *ngIf="selectedUltramarine">
-  <app-update-ultramarine
-    [ultramarine]="selectedUltramarine"
-    (infoUpdate)="handleInfoUpdate($event)"
-    (cancelUpdate)="handleCancelUpdate()">
-  </app-update-ultramarine>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</mat-table>
 
-  <app-update-ultramarine-equipment
-    [ultramarine]="selectedUltramarine"
-    (equipmentUpdate)="handleEquipmentUpdate($event)">
-  </app-update-ultramarine-equipment>
+<div *ngIf="selectedUltramarine" class="mt-4">
+  <div class="update-components">
+    <app-update-ultramarine
+      [ultramarine]="selectedUltramarine"
+      (infoUpdate)="handleInfoUpdate($event)"
+      (cancelUpdate)="handleCancelUpdate()">
+    </app-update-ultramarine>
 
-  <button (click)="updateGlobal()">Mettre à jour globalement</button>
+    <button mat-raised-button color="accent" (click)="updateGlobal()">Mettre à jour globalement</button>
+
+    <app-update-ultramarine-equipment
+      [ultramarine]="selectedUltramarine"
+      (equipmentUpdate)="handleEquipmentUpdate($event)">
+    </app-update-ultramarine-equipment>
+  </div>
+
 </div>

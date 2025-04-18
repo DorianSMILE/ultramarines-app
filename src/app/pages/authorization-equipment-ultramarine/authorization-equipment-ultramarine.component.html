@@ -1,0 +1,80 @@
+<div class="container">
+  <h2>Autorisation de Port d'Équipement</h2>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <!-- Colonne ultramarineId -->
+    <ng-container matColumnDef="ultramarineId">
+      <th mat-header-cell *matHeaderCellDef>ID Ultramarine</th>
+      <td mat-cell *matCellDef="let authorization">{{ authorization.ultramarineId }}</td>
+    </ng-container>
+
+    <!-- Colonne supplyAuthorizations -->
+    <ng-container matColumnDef="supplyAuthorizations">
+      <th mat-header-cell *matHeaderCellDef>Supply Authorizations</th>
+      <td mat-cell *matCellDef="let authorization">
+        <div *ngFor="let category of filterKeys(objectKeys(authorization.supplyAuthorizations))">
+          <strong>{{ category }}:</strong>
+
+          <!-- Select personnalisé -->
+          <select
+            [(ngModel)]="authorization.supplyAuthorizations[category]"
+            (change)="onSelectionChange(authorization, 'supplyAuthorizations', category)">
+            <option value="unlimited">unlimited</option>
+            <option value="unautorized">unautorized</option>
+            <option value="custom">number</option>
+          </select>
+
+          <!-- Champ de type number pour "custom" -->
+          <div *ngIf="authorization.supplyAuthorizations[category] === 'custom'">
+            <input
+              type="number"
+              [(ngModel)]="authorization.supplyAuthorizations[category + '_custom']"
+              (ngModelChange)="updateCustomValue(authorization, 'supplyAuthorizations', category)">
+          </div>
+        </div>
+      </td>
+    </ng-container>
+
+    <!-- Colonne weightAuthorizations -->
+    <ng-container matColumnDef="weightAuthorizations">
+      <th mat-header-cell *matHeaderCellDef>Weight Authorizations</th>
+      <td mat-cell *matCellDef="let authorization">
+        <div *ngFor="let category of filterKeys(objectKeys(authorization.weightAuthorizations))">
+          <strong>{{ category }}:</strong>
+
+          <!-- Select personnalisé -->
+          <select
+            [(ngModel)]="authorization.weightAuthorizations[category]"
+            (change)="onSelectionChange(authorization, 'weightAuthorizations', category)">
+            <option value="unlimited">unlimited</option>
+            <option value="unautorized">unautorized</option>
+            <option value="custom">number</option>
+          </select>
+
+          <!-- Champ de type number pour "custom" -->
+          <div *ngIf="authorization.weightAuthorizations[category] === 'custom'">
+            <input
+              type="number"
+              [(ngModel)]="authorization.weightAuthorizations[category + '_custom']"
+              (ngModelChange)="updateCustomValue(authorization, 'weightAuthorizations', category)">
+          </div>
+        </div>
+      </td>
+    </ng-container>
+
+    <!-- Colonne Bouton de Modification -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let authorization">
+        <button mat-raised-button color="primary" (click)="updateAuthorization(authorization)">
+          Modifier
+        </button>
+      </td>
+    </ng-container>
+
+    <!-- Header et Footer -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

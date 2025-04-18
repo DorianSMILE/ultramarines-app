@@ -1,3 +1,4 @@
+import { MATERIAL_IMPORTS } from '@app/material';
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -6,7 +7,7 @@ import { EquipmentAuthorizationDTO } from '@models/equipment.authorization.dto';
 
 @Component({
   selector: 'app-equipment-authorization',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ...MATERIAL_IMPORTS],
   standalone: true,
   templateUrl: './equipment-authorization.component.html',
   styleUrls: ['./equipment-authorization.component.scss']
@@ -17,6 +18,11 @@ export class EquipmentAuthorizationComponent implements OnInit, OnChanges {
   authorizationData?: EquipmentAuthorizationDTO;
   errorMessage: string = '';
   private lastLoadedId?: number;
+
+  columnsToDisplay: string[] = ['key', 'value'];
+
+  supplyDataSource: { key: string; value: string }[] = [];
+  weightDataSource: { key: string; value: string }[] = [];
 
   constructor(private authService: EquipmentAuthorizationService) {}
 
@@ -38,6 +44,10 @@ export class EquipmentAuthorizationComponent implements OnInit, OnChanges {
     this.authService.getAuthorizations(this.ultramarineId).subscribe({
       next: (data) => {
         this.authorizationData = data;
+        this.supplyDataSource = Object.entries(this.authorizationData.supplyAuthorizations)
+          .map(([key, value]) => ({ key, value }));
+        this.weightDataSource = Object.entries(this.authorizationData.weightAuthorizations)
+          .map(([key, value]) => ({ key, value }));
       },
       error: (err) => {
         console.error(err);

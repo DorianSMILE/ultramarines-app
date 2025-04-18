@@ -1,65 +1,69 @@
-<div class="container mt-5">
+<div class="mat-typography container" style="margin-top: 2rem;">
   <h1 class="text-center">Arsenal</h1>
-  <hr>
+  <mat-divider class="my-4"></mat-divider>
 
   <!-- Filtres -->
-  <div class="row mb-4">
-    <div class="col-md-4">
-      <label for="equipmentType">Type d'équipement</label>
-      <select id="equipmentType" class="form-control"
-              [(ngModel)]="equipmentFilter.equipmentType"
-              (change)="updateEquipments()">
-        <option [ngValue]="null">Tous types</option>
-        <option *ngFor="let type of equipmentTypes" [ngValue]="type">
-          {{ type }}
-        </option>
-      </select>
-    </div>
+  <div class="filters" style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+    <mat-form-field appearance="fill" style="flex: 1; min-width: 200px;">
+      <mat-label>Type d'équipement</mat-label>
+      <mat-select [(ngModel)]="equipmentFilter.equipmentType" (selectionChange)="updateEquipments()">
+        <mat-option [value]="null">Tous types</mat-option>
+        <mat-option *ngFor="let type of equipmentTypes" [value]="type">{{ type }}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-    <div class="col-md-4">
-      <label for="supply">Carburant</label>
-      <select id="supply" class="form-control"
-              [(ngModel)]="equipmentFilter.supply"
-              (change)="updateEquipments()">
-        <option [ngValue]="null">Tous carburants</option>
-        <option *ngFor="let supply of supplyOptions" [ngValue]="supply">
-          {{ supply }}
-        </option>
-      </select>
-    </div>
+    <mat-form-field appearance="fill" style="flex: 1; min-width: 200px;">
+      <mat-label>Carburant</mat-label>
+      <mat-select [(ngModel)]="equipmentFilter.supply" (selectionChange)="updateEquipments()">
+        <mat-option [value]="null">Tous carburants</mat-option>
+        <mat-option *ngFor="let supply of supplyOptions" [value]="supply">{{ supply }}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-    <div class="col-md-4">
-      <label for="weight">Poids</label>
-      <select id="weight" class="form-control"
-              [(ngModel)]="equipmentFilter.weight"
-              (change)="updateEquipments()">
-        <option [ngValue]="null">Tous poids</option>
-        <option *ngFor="let weight of weightOptions" [ngValue]="weight">
-          {{ weight }}
-        </option>
-      </select>
-    </div>
+    <mat-form-field appearance="fill" style="flex: 1; min-width: 200px;">
+      <mat-label>Poids</mat-label>
+      <mat-select [(ngModel)]="equipmentFilter.weight" (selectionChange)="updateEquipments()">
+        <mat-option [value]="null">Tous poids</mat-option>
+        <mat-option *ngFor="let weight of weightOptions" [value]="weight">{{ weight }}</mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
 
   <!-- Tableau -->
-  <table class="table table-striped">
-    <thead class="thead-dark">
-    <tr>
-      <th>ID</th>
-      <th>Nom</th>
-      <th>Type</th>
-      <th>Carburant</th>
-      <th>Poids</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let equipment of equipments">
-      <td>{{ equipment.id }}</td>
-      <td>{{ equipment.name }}</td>
-      <td>{{ equipment.equipmentType }}</td>
-      <td>{{ equipment.supply }}</td>
-      <td>{{ equipment.weight }}</td>
-    </tr>
-    </tbody>
+  <table mat-table [dataSource]="equipments" class="mat-elevation-z8" style="width: 100%;">
+
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let equipment">{{ equipment.id }}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Nom</th>
+      <td mat-cell *matCellDef="let equipment">{{ equipment.name }}</td>
+    </ng-container>
+
+    <!-- Type Column -->
+    <ng-container matColumnDef="equipmentType">
+      <th mat-header-cell *matHeaderCellDef>Type</th>
+      <td mat-cell *matCellDef="let equipment">{{ equipment.equipmentType }}</td>
+    </ng-container>
+
+    <!-- Supply Column -->
+    <ng-container matColumnDef="supply">
+      <th mat-header-cell *matHeaderCellDef>Carburant</th>
+      <td mat-cell *matCellDef="let equipment">{{ equipment.supply }}</td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="weight">
+      <th mat-header-cell *matHeaderCellDef>Poids</th>
+      <td mat-cell *matCellDef="let equipment">{{ equipment.weight }}</td>
+    </ng-container>
+
+    <!-- Header & Row Declarations -->
+    <tr mat-header-row *matHeaderRowDef="['id', 'name', 'equipmentType', 'supply', 'weight']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['id', 'name', 'equipmentType', 'supply', 'weight'];"></tr>
   </table>
 </div>

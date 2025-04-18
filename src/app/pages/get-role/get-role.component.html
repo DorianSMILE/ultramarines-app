@@ -1,7 +1,9 @@
-<label for="role">{{ label }}</label>
-<select id="role" (change)="onSelectRole($event)">
-  <option value="" disabled selected>Sélectionnez un rôle</option>
-  <option *ngFor="let role of roles" [value]="role.roleId">
-    {{ role.role }} ({{ role.roleId }})
-  </option>
-</select>
+<mat-form-field appearance="fill" class="w-100">
+  <mat-label>{{ label }}</mat-label>
+  <mat-select id="role" (selectionChange)="onSelectRole($event.value)">
+    <mat-option value="" disabled selected>Sélectionnez un rôle</mat-option>
+    <mat-option *ngFor="let role of roles" [value]="role.roleId">
+      {{ role.role }} ({{ role.roleId }})
+    </mat-option>
+  </mat-select>
+</mat-form-field>

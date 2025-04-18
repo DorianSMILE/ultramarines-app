@@ -1,11 +1,15 @@
-<form [formGroup]="ultramarineForm" (ngSubmit)="onSubmit()">
-  <label>Nom :
-    <input type="text" formControlName="name">
-  </label>
+<form [formGroup]="ultramarineForm" (ngSubmit)="onSubmit()" class="form-container">
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Nom</mat-label>
+    <input matInput type="text" formControlName="name" />
+  </mat-form-field>
 
-  <label>Grade :
-    <input type="text" formControlName="grade">
-  </label>
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Grade</mat-label>
+    <input matInput type="text" formControlName="grade" />
+  </mat-form-field>
 
-  <button type="submit">Envoyer</button>
+  <button mat-raised-button color="primary" type="submit" [disabled]="ultramarineForm.invalid">
+    Envoyer
+  </button>
 </form>

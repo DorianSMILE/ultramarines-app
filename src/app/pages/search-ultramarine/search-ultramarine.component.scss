@@ -1,0 +1,10 @@
+.update-components {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.update-components > app-update-ultramarine,
+.update-components > app-update-ultramarine-equipment {
+  flex: 1;
+}

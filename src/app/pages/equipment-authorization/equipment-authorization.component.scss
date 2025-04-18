@@ -1,0 +1,19 @@
+.authorization-card {
+  margin: 2rem;
+  padding: 1rem;
+}
+
+.authorization-tables {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: space-between;
+}
+
+.authorization-table {
+  flex: 1 1 45%;
+}
+
+table {
+  width: 100%;
+}

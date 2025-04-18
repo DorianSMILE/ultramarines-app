@@ -1,4 +1,4 @@
-<div>
+<div class="update-equipment-form">
   <h3>Modifier ces équipements</h3>
 
   <div *ngIf="equipmentTypes.length === 0">
@@ -7,17 +7,17 @@
 
   <div *ngIf="equipmentTypes.length > 0">
     <div *ngFor="let type of equipmentTypes">
-      <label>
-        {{ type }} :
-        <select [(ngModel)]="localEquipments[type]" (ngModelChange)="emitUpdate()">
-          <option value=""></option>
-          <option *ngFor="let option of availableEquipments[type]" [value]="option">
+      <mat-form-field appearance="fill" class="equipment-select">
+        <mat-label>{{ type }}</mat-label>
+        <mat-select [(ngModel)]="localEquipments[type]" (selectionChange)="emitUpdate()">
+          <mat-option value="">Aucune sélection</mat-option>
+          <mat-option *ngFor="let option of availableEquipments[type]" [value]="option">
             {{ option }}
-          </option>
-        </select>
-      </label>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
   </div>
 
-  <button (click)="updateEquipments()">Enregistrer les équipements</button>
+  <button mat-raised-button color="primary" (click)="updateEquipments()">Enregistrer les équipements</button>
 </div>

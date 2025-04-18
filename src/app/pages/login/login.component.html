@@ -1,15 +1,26 @@
 <div class="login-container">
   <h2>Connexion</h2>
   <form (ngSubmit)="onSubmit()">
-    <div>
-      <label for="username">Nom d'utilisateur :</label>
-      <input type="text" id="username" [(ngModel)]="username" name="username" required>
+    <!-- Nom d'utilisateur -->
+    <mat-form-field appearance="fill" class="w-100">
+      <mat-label>Nom d'utilisateur</mat-label>
+      <input matInput type="text" id="username" [(ngModel)]="username" name="username" required>
+    </mat-form-field>
+
+    <!-- Mot de passe -->
+    <mat-form-field appearance="fill" class="w-100">
+      <mat-label>Mot de passe</mat-label>
+      <input matInput type="password" id="password" [(ngModel)]="password" name="password" required>
+    </mat-form-field>
+
+    <!-- Bouton de soumission -->
+    <div class="text-end">
+      <button mat-raised-button type="submit" color="primary">Se connecter</button>
     </div>
-    <div>
-      <label for="password">Mot de passe :</label>
-      <input type="password" id="password" [(ngModel)]="password" name="password" required>
+
+    <!-- Message d'erreur -->
+    <div *ngIf="errorMessage" class="error mat-body-1">
+      {{ errorMessage }}
     </div>
-    <button type="submit">Se connecter</button>
-    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
   </form>
 </div>

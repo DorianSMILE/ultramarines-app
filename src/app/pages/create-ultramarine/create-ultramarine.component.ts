@@ -1,3 +1,4 @@
+import { MATERIAL_IMPORTS } from '@app/material';
 import { Component, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { UltramarineService } from '@services/ultramarine.service';
@@ -6,7 +7,7 @@ import { NewUltramarineDTO } from '@models/newultramarine.dto';
 @Component({
   selector: 'app-create-ultramarine',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, ...MATERIAL_IMPORTS],
   templateUrl: './create-ultramarine.component.html',
   styleUrl: './create-ultramarine.component.scss'
 })

@@ -1,3 +1,4 @@
+import { MATERIAL_IMPORTS } from '@app/material';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -7,7 +8,7 @@ import { AuthService } from '@services/auth-service.service';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ...MATERIAL_IMPORTS],
   templateUrl: './login.component.html'
 })
 export class LoginComponent {

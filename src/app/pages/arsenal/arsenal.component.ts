@@ -1,3 +1,4 @@
+import { MATERIAL_IMPORTS } from '@app/material';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -10,7 +11,7 @@ import { WeightEnum } from '@models/equipment.filter.dto';
 
 @Component({
   selector: 'app-arsenal',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ...MATERIAL_IMPORTS],
   standalone: true,
   templateUrl: './arsenal.component.html',
   styleUrl: './arsenal.component.scss'
