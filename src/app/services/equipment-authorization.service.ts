@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { EquipmentAuthorizationDTO } from '@models/equipment.authorization.dto';
+import { UltramarineSelectDTO } from '@models/ultramarine.select.dto';
 
 
 @Injectable({
@@ -27,5 +28,12 @@ export class EquipmentAuthorizationService {
     return this.http.put<EquipmentAuthorizationDTO>(`${this.baseUrl}`, authorization);
   }
 
+  getUltramarinesWithoutAuthorization(): Observable<UltramarineSelectDTO[]> {
+    return this.http.get<UltramarineSelectDTO[]>(`${this.baseUrl}/unauthorized`);
+  }
+
+  createAuthorizationFor(id: string): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/manual`, id );
+  }
 
 }

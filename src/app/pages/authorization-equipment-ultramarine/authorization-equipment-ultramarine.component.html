@@ -1,4 +1,6 @@
 <div class="container">
+  <app-authorization-ultramarine-list (authorizationCreated)="refreshAuthorizations()"></app-authorization-ultramarine-list>
+
   <h2>Autorisation de Port d'Équipement</h2>
 
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">

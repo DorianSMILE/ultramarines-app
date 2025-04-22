@@ -4,12 +4,13 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { AuthorizationUltramarineListComponent } from '@pages/authorization-ultramarine-list/authorization-ultramarine-list.component';
 import { EquipmentAuthorizationService } from '@services/equipment-authorization.service';
 import { EquipmentAuthorizationDTO } from '@models/equipment.authorization.dto';
 
 @Component({
   selector: 'app-authorization-equipment-ultramarine',
-  imports: [CommonModule, FormsModule, ...MATERIAL_IMPORTS],
+  imports: [CommonModule, FormsModule, AuthorizationUltramarineListComponent, ...MATERIAL_IMPORTS],
   standalone: true,
   templateUrl: './authorization-equipment-ultramarine.component.html',
   styleUrls: ['./authorization-equipment-ultramarine.component.scss']
@@ -52,14 +53,10 @@ export class AuthorizationEquipmentUltramarineComponent implements OnInit {
     const currentValue = authorization[section][category];
     const customKey = `${category}_custom`;
 
-    console.log('current : ', currentValue);
-    console.log('custom : ', customKey);
-
     if (currentValue !== 'custom') {
       delete authorization[section][customKey];
     }
   }
-
 
   updateCustomValue(authorization: any, section: string, category: string): void {
     const customKey = `${category}_custom`;
@@ -92,6 +89,7 @@ export class AuthorizationEquipmentUltramarineComponent implements OnInit {
   updateAuthorization(authorization: EquipmentAuthorizationDTO): void {
     this.replaceCustomValues(authorization.supplyAuthorizations);
     this.replaceCustomValues(authorization.weightAuthorizations);
+
     this.equipmentAuthorizationService.updateAuthorization(authorization).subscribe({
       next: (updated) => {
         console.log('Mise à jour réussie', updated),
@@ -101,6 +99,7 @@ export class AuthorizationEquipmentUltramarineComponent implements OnInit {
           this.authorizations[index] = updated;
           this.dataSource.data = [...this.authorizations];
         }
+        this.refreshAuthorizations();
       },
       error: (err) => console.error('Erreur lors de la mise à jour', err)
     });
@@ -120,6 +119,19 @@ export class AuthorizationEquipmentUltramarineComponent implements OnInit {
         delete section[customKey];
       }
     });
+  }
+
+  refreshAuthorizations() {
+    this.equipmentAuthorizationService.getAllAuthorizations().subscribe(
+      (data) => {
+        this.authorizations = data;
+        this.preprocessAuthorizations(this.authorizations);
+        this.dataSource.data = this.authorizations;
+      },
+      (error) => {
+        console.error('Erreur lors de la récupération des autorisations', error);
+      }
+    );
   }
 
 }
