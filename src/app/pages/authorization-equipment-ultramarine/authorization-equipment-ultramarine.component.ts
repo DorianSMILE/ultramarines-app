@@ -1,20 +1,23 @@
 import { MATERIAL_IMPORTS } from '@app/material';
 import { MatTableDataSource } from '@angular/material/table';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { AuthorizationUltramarineListComponent } from '@pages/authorization-ultramarine-list/authorization-ultramarine-list.component';
 import { EquipmentAuthorizationService } from '@services/equipment-authorization.service';
 import { EquipmentAuthorizationDTO } from '@models/equipment.authorization.dto';
 
 @Component({
   selector: 'app-authorization-equipment-ultramarine',
-  imports: [CommonModule, FormsModule, ...MATERIAL_IMPORTS],
+  imports: [CommonModule, FormsModule, AuthorizationUltramarineListComponent, ...MATERIAL_IMPORTS],
   standalone: true,
   templateUrl: './authorization-equipment-ultramarine.component.html',
   styleUrls: ['./authorization-equipment-ultramarine.component.scss']
 })
 export class AuthorizationEquipmentUltramarineComponent implements OnInit {
+  @ViewChild(AuthorizationUltramarineListComponent)
+  manualListComponent?: AuthorizationUltramarineListComponent;
 
   authorizations: EquipmentAuthorizationDTO[] = [];
   dataSource = new MatTableDataSource<EquipmentAuthorizationDTO>(this.authorizations);
@@ -52,14 +55,10 @@ export class AuthorizationEquipmentUltramarineComponent implements OnInit {
     const currentValue = authorization[section][category];
     const customKey = `${category}_custom`;
 
-    console.log('current : ', currentValue);
-    console.log('custom : ', customKey);
-
     if (currentValue !== 'custom') {
       delete authorization[section][customKey];
     }
   }
-
 
   updateCustomValue(authorization: any, section: string, category: string): void {
     const customKey = `${category}_custom`;
@@ -92,6 +91,7 @@ export class AuthorizationEquipmentUltramarineComponent implements OnInit {
   updateAuthorization(authorization: EquipmentAuthorizationDTO): void {
     this.replaceCustomValues(authorization.supplyAuthorizations);
     this.replaceCustomValues(authorization.weightAuthorizations);
+
     this.equipmentAuthorizationService.updateAuthorization(authorization).subscribe({
       next: (updated) => {
         console.log('Mise à jour réussie', updated),
@@ -101,6 +101,8 @@ export class AuthorizationEquipmentUltramarineComponent implements OnInit {
           this.authorizations[index] = updated;
           this.dataSource.data = [...this.authorizations];
         }
+        this.refreshAuthorizations();
+        this.manualListComponent?.refresh();
       },
       error: (err) => console.error('Erreur lors de la mise à jour', err)
     });
@@ -118,6 +120,33 @@ export class AuthorizationEquipmentUltramarineComponent implements OnInit {
           section[key] = 'unautorized';
         }
         delete section[customKey];
+      }
+    });
+  }
+
+  refreshAuthorizations() {
+    this.equipmentAuthorizationService.getAllAuthorizations().subscribe(
+      (data) => {
+        this.authorizations = data;
+        this.preprocessAuthorizations(this.authorizations);
+        this.dataSource.data = this.authorizations;
+      },
+      (error) => {
+        console.error('Erreur lors de la récupération des autorisations', error);
+      }
+    );
+  }
+
+  deleteAuthorization(id: number): void {
+    this.equipmentAuthorizationService.deleteAuthorization(id).subscribe({
+      next: () => {
+        // Enlève l'élément du tableau
+        this.authorizations = this.authorizations.filter(auth => auth.ultramarineId !== id);
+        this.dataSource.data = [...this.authorizations];
+        this.manualListComponent?.refresh();
+      },
+      error: err => {
+        console.error('Erreur lors de la suppression', err);
       }
     });
   }
