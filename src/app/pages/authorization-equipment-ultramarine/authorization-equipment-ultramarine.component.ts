@@ -1,6 +1,6 @@
 import { MATERIAL_IMPORTS } from '@app/material';
 import { MatTableDataSource } from '@angular/material/table';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -16,6 +16,8 @@ import { EquipmentAuthorizationDTO } from '@models/equipment.authorization.dto';
   styleUrls: ['./authorization-equipment-ultramarine.component.scss']
 })
 export class AuthorizationEquipmentUltramarineComponent implements OnInit {
+  @ViewChild(AuthorizationUltramarineListComponent)
+  manualListComponent?: AuthorizationUltramarineListComponent;
 
   authorizations: EquipmentAuthorizationDTO[] = [];
   dataSource = new MatTableDataSource<EquipmentAuthorizationDTO>(this.authorizations);
@@ -100,6 +102,7 @@ export class AuthorizationEquipmentUltramarineComponent implements OnInit {
           this.dataSource.data = [...this.authorizations];
         }
         this.refreshAuthorizations();
+        this.manualListComponent?.refresh();
       },
       error: (err) => console.error('Erreur lors de la mise à jour', err)
     });
@@ -132,6 +135,20 @@ export class AuthorizationEquipmentUltramarineComponent implements OnInit {
         console.error('Erreur lors de la récupération des autorisations', error);
       }
     );
+  }
+
+  deleteAuthorization(id: number): void {
+    this.equipmentAuthorizationService.deleteAuthorization(id).subscribe({
+      next: () => {
+        // Enlève l'élément du tableau
+        this.authorizations = this.authorizations.filter(auth => auth.ultramarineId !== id);
+        this.dataSource.data = [...this.authorizations];
+        this.manualListComponent?.refresh();
+      },
+      error: err => {
+        console.error('Erreur lors de la suppression', err);
+      }
+    });
   }
 
 }

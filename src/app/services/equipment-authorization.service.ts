@@ -36,4 +36,8 @@ export class EquipmentAuthorizationService {
     return this.http.post<void>(`${this.baseUrl}/manual`, id );
   }
 
+  deleteAuthorization(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  }
+
 }

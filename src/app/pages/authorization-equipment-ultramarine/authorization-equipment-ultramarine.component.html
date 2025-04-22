@@ -72,8 +72,12 @@
         <button mat-raised-button color="primary" (click)="updateAuthorization(authorization)">
           Modifier
         </button>
+        <button mat-raised-button color="warn" (click)="deleteAuthorization(authorization.ultramarineId)">
+          Radiation
+        </button>
       </td>
     </ng-container>
+
 
     <!-- Header et Footer -->
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

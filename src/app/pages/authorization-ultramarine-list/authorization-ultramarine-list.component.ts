@@ -22,9 +22,7 @@ export class AuthorizationUltramarineListComponent implements OnInit {
   selectedId: string | null = null;
 
   ngOnInit() {
-    console.log('ici');
-    this.equipmentAuthorizationService.getUltramarinesWithoutAuthorization()
-      .subscribe(data => this.ultramarines = data);
+    this.refresh();
   }
 
   createManualAuth() {
@@ -37,4 +35,10 @@ export class AuthorizationUltramarineListComponent implements OnInit {
         this.authorizationCreated.emit();
       });
   }
+
+  refresh(): void {
+    this.equipmentAuthorizationService.getUltramarinesWithoutAuthorization()
+      .subscribe(data => this.ultramarines = data);
+  }
+
 }
