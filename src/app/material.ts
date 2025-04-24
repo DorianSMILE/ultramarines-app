@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatChipsModule } from '@angular/material/chips';
 
 export const MATERIAL_IMPORTS = [
   MatButtonModule,
@@ -21,4 +22,5 @@ export const MATERIAL_IMPORTS = [
   MatCardModule,
   MatToolbarModule,
   MatMenuModule,
+  MatChipsModule
 ];

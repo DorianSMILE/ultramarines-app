@@ -17,7 +17,7 @@ export enum EquipmentTypeEnum {
 }
 
 export interface EquipmentFilterDTO {
-  weight?: WeightEnum;
-  supply?: SupplyEnum;
-  equipmentType?: EquipmentTypeEnum;
+  equipmentType?: EquipmentTypeEnum[];
+  supply?: SupplyEnum[];
+  weight?: WeightEnum[];
 }
