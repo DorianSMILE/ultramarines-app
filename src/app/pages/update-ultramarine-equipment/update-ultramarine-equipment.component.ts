@@ -138,7 +138,6 @@ export class UpdateUltramarineEquipmentComponent implements OnInit, OnChanges {
           }
         }
         byName[name] = color;
-        console.log('Color : ', color);
       }
       this.authorizationColors[type] = byName;
     }
