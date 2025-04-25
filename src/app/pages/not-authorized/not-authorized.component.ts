@@ -1,6 +1,7 @@
 import { MATERIAL_IMPORTS } from '@app/material';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-not-authorized',
@@ -9,6 +10,14 @@ import { CommonModule } from '@angular/common';
   templateUrl: './not-authorized.component.html',
   styleUrl: './not-authorized.component.scss'
 })
-export class NotAuthorizedComponent {
+export class NotAuthorizedComponent implements OnInit {
+
+  constructor(private router: Router) {}
+
+  ngOnInit(): void {
+    setTimeout(() => {
+      this.router.navigate(['/']);
+    }, 3000);
+  }
 
 }

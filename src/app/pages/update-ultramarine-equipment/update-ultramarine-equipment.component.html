@@ -7,15 +7,38 @@
 
   <div *ngIf="equipmentTypes.length > 0">
     <div *ngFor="let type of equipmentTypes">
-      <mat-form-field appearance="fill" class="equipment-select">
+      <mat-form-field
+        appearance="fill"
+        class="equipment-select"
+        [ngClass]="{
+          'warn-field': authorizationColors[type]?.[localEquipments[type]] === 'warn',
+          'accent-field': getFieldColor(type) === 'accent'
+        }"
+        [color]="
+      // priorise warn > field-accent > primary
+      authorizationColors[type]?.[localEquipments[type]] === 'warn'
+        ? 'warn'
+        : (getFieldColor(type) === 'accent' ? 'accent' : 'primary')
+    ">
         <mat-label>{{ type }}</mat-label>
-        <mat-select [(ngModel)]="localEquipments[type]" (selectionChange)="emitUpdate()">
+        <mat-select
+          [(ngModel)]="localEquipments[type]"
+          (selectionChange)="emitUpdate(); applyAuthorizationColors()"
+          panelClass="auth-panel-{{ type }}">
           <mat-option value="">Aucune sélection</mat-option>
-          <mat-option *ngFor="let option of availableEquipments[type]" [value]="option">
+          <mat-option
+            *ngFor="let option of availableEquipments[type]"
+            [value]="option"
+            [ngClass]="{
+              'warn-option':   authorizationColors[type]?.[option] === 'warn',
+              'accent-option': authorizationColors[type]?.[option] === 'accent'
+            }">
             {{ option }}
           </mat-option>
         </mat-select>
       </mat-form-field>
+
+
     </div>
   </div>
 

@@ -30,3 +30,22 @@ mat-form-field {
 mat-label {
   color: #34495e;
 }
+
+/* Angular Material créé l’overlay dans un overlay-pane en dehors du flow du component,
+   il faut donc “percée” le shadow DOM avec ::ng-deep (ou mettre ces règles en global styles) */
+
+::ng-deep .warn-option {
+  background-color: rgba(244, 67, 54, 0.1) !important;    /* rouge léger */
+}
+
+::ng-deep .accent-option {
+  background-color: rgba(255, 152, 0, 0.1) !important;    /* orange léger */
+}
+
+::ng-deep .warn-field .mat-mdc-form-field-infix {
+  background-color: rgba(244, 67, 54, 0.1) !important;   /* rouge léger */
+}
+
+::ng-deep .accent-field .mat-mdc-form-field-infix {
+  background-color: rgba(255, 152, 0, 0.1) !important;   /* orange léger */
+}

@@ -5,6 +5,10 @@ import { FormsModule } from '@angular/forms';
 import { EquipmentService } from '@services/equipment.service';
 import { GlobalUpdateService } from '@services/global-update.service';
 import { UltramarineDTO } from '@models/ultramarine.dto';
+import { EquipmentAuthorizationDTO } from '@models/equipment.authorization.dto';
+import { EquipmentTypeEnum } from '@models/enum/equipment.enums';
+import { SupplyEnum } from '@models/enum/equipment.enums';
+import { WeightEnum } from '@models/enum/equipment.enums';
 
 @Component({
   selector: 'app-update-ultramarine-equipment',
@@ -16,11 +20,15 @@ import { UltramarineDTO } from '@models/ultramarine.dto';
 export class UpdateUltramarineEquipmentComponent implements OnInit, OnChanges {
 
   @Input() ultramarine!: UltramarineDTO;
+  @Input() equipmentAuthorization?: EquipmentAuthorizationDTO | null;
   @Output() equipmentUpdate: EventEmitter<Partial<UltramarineDTO>> = new EventEmitter<Partial<UltramarineDTO>>();
 
-  availableEquipments: { [key: string]: string[] } = {};
-  localEquipments: { [key: string]: string } = {};
+  availableEquipments: Record<string,string[]> = {};
+  localEquipments: Record<string,string> = {};
   isPatching: boolean = false;
+
+  private equipmentByName: Record<string, { supply: SupplyEnum; weight: WeightEnum }> = {};
+  authorizationColors: Record<string, Record<string, ''|'warn'|'accent'>> = {};
 
   constructor(
     private equipmentService: EquipmentService,
@@ -30,6 +38,7 @@ export class UpdateUltramarineEquipmentComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.loadAvailableEquipments();
     this.loadUltramarineEquipments();
+    this.applyAuthorizationColors();
   }
 
   ngOnChanges(): void {
@@ -37,25 +46,40 @@ export class UpdateUltramarineEquipmentComponent implements OnInit, OnChanges {
       this.isPatching = true;
       this.localEquipments = {};
       this.loadUltramarineEquipments();
+      this.applyAuthorizationColors();
       setTimeout(() => this.isPatching = false, 0);
     }
   }
 
-  loadAvailableEquipments(): void {
-    this.equipmentService.getEquipmentsByType().subscribe({
-      next: data => {
-        this.availableEquipments = data;
-      },
-      error: err => console.error(err)
-    });
-  }
-
   loadUltramarineEquipments(): void {
-    if (this.ultramarine && this.ultramarine.id != null && this.ultramarine.equipments) {
+    if (this.ultramarine?.equipments) {
       this.ultramarine.equipments.forEach(equip => {
         this.localEquipments[equip.equipmentType] = equip.name;
       });
     }
+  }
+
+  loadAvailableEquipments(): void {
+    this.equipmentService.getAllEquipments({}).subscribe({
+      next: (list) => {
+        this.availableEquipments = {};
+        this.equipmentByName = {};
+
+        list.forEach(eq => {
+          (this.availableEquipments[eq.equipmentType] ??= []).push(eq.name);
+
+          if (eq.supply != null && eq.weight != null) {
+            this.equipmentByName[eq.name] = {
+              supply: eq.supply as SupplyEnum,
+              weight: eq.weight as WeightEnum
+            };
+          }
+        });
+
+        this.applyAuthorizationColors();
+      },
+      error: err => console.error(err)
+    });
   }
 
   get equipmentTypes(): string[] {
@@ -86,6 +110,52 @@ export class UpdateUltramarineEquipmentComponent implements OnInit, OnChanges {
       name: this.localEquipments[key]
     }));
     this.equipmentUpdate.emit({ equipments: equipmentsList });
+  }
+
+  applyAuthorizationColors(): void {
+    if (!this.equipmentAuthorization) return;
+    this.authorizationColors = {};
+
+    for (const type of Object.keys(this.availableEquipments)) {
+      const byName: Record<string,''|'warn'|'accent'> = {};
+      for (const name of this.availableEquipments[type]!) {
+        const { supply, weight } = this.equipmentByName[name];
+        const supAuth = this.equipmentAuthorization.supplyAuthorizations[supply];
+        const wAuth   = this.equipmentAuthorization.weightAuthorizations[weight];
+
+        let color: ''|'warn'|'accent' = '';
+        if (supAuth==='unautorized' || wAuth==='unautorized') {
+          color = 'warn';
+        } else {
+          const limit = parseInt(wAuth, 10);
+          if (!isNaN(limit)) {
+            const used = Object.values(this.localEquipments)
+                              .filter(n => this.equipmentByName[n]?.weight===weight)
+                              .length;
+            if (used >= limit) color = 'accent';
+          }
+        }
+        byName[name] = color;
+      }
+      this.authorizationColors[type] = byName;
+    }
+  }
+
+  getFieldColor(type: string): '' | 'warn' | 'accent' {
+    if (!this.equipmentAuthorization) return '';
+    const name = this.localEquipments[type];
+    const info = this.equipmentByName[name];
+    if (!info) return '';
+
+    const wAuth = this.equipmentAuthorization.weightAuthorizations[info.weight]!;
+    const limit = parseInt(wAuth, 10);
+    if (isNaN(limit)) return '';
+
+    const count = Object.values(this.localEquipments)
+      .filter(n => this.equipmentByName[n]?.weight === info.weight)
+      .length;
+
+    return count > limit ? 'accent' : '';
   }
 
 }
