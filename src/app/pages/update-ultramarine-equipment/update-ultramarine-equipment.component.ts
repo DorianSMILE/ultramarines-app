@@ -45,7 +45,6 @@ export class UpdateUltramarineEquipmentComponent implements OnInit, OnChanges {
     if (this.ultramarine) {
       this.isPatching = true;
       this.localEquipments = {};
-      this.authorizationColors = {};
       this.loadUltramarineEquipments();
       this.applyAuthorizationColors();
       setTimeout(() => this.isPatching = false, 0);
@@ -53,8 +52,7 @@ export class UpdateUltramarineEquipmentComponent implements OnInit, OnChanges {
   }
 
   loadUltramarineEquipments(): void {
-    //this.ultramarine?.equipments tester de replace par ça
-    if (this.ultramarine && this.ultramarine.id != null && this.ultramarine.equipments) {
+    if (this.ultramarine?.equipments) {
       this.ultramarine.equipments.forEach(equip => {
         this.localEquipments[equip.equipmentType] = equip.name;
       });
@@ -141,6 +139,23 @@ export class UpdateUltramarineEquipmentComponent implements OnInit, OnChanges {
       }
       this.authorizationColors[type] = byName;
     }
+  }
+
+  getFieldColor(type: string): '' | 'warn' | 'accent' {
+    if (!this.equipmentAuthorization) return '';
+    const name = this.localEquipments[type];
+    const info = this.equipmentByName[name];
+    if (!info) return '';
+
+    const wAuth = this.equipmentAuthorization.weightAuthorizations[info.weight]!;
+    const limit = parseInt(wAuth, 10);
+    if (isNaN(limit)) return '';
+
+    const count = Object.values(this.localEquipments)
+      .filter(n => this.equipmentByName[n]?.weight === info.weight)
+      .length;
+
+    return count > limit ? 'accent' : '';
   }
 
 }

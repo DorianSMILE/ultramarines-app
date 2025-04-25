@@ -11,10 +11,15 @@
         appearance="fill"
         class="equipment-select"
         [ngClass]="{
-          'warn-field':  authorizationColors[type]?.[ localEquipments[type] ] === 'warn',
-          'accent-field': authorizationColors[type]?.[ localEquipments[type] ] === 'accent'
+          'warn-field': authorizationColors[type]?.[localEquipments[type]] === 'warn',
+          'accent-field': getFieldColor(type) === 'accent'
         }"
-        [color]="authorizationColors[type]?.[ localEquipments[type] ] || 'primary'">
+        [color]="
+      // priorise warn > field-accent > primary
+      authorizationColors[type]?.[localEquipments[type]] === 'warn'
+        ? 'warn'
+        : (getFieldColor(type) === 'accent' ? 'accent' : 'primary')
+    ">
         <mat-label>{{ type }}</mat-label>
         <mat-select
           [(ngModel)]="localEquipments[type]"
@@ -32,6 +37,7 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
+
 
     </div>
   </div>
