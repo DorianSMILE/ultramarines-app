@@ -6,9 +6,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { EquipmentService } from '@services/equipment.service';
 import { EquipmentDTO } from '@models/equipment.dto';
 import { EquipmentFilterDTO } from '@models/equipment.filter.dto';
-import { EquipmentTypeEnum } from '@models/equipment.filter.dto';
-import { SupplyEnum } from '@models/equipment.filter.dto';
-import { WeightEnum } from '@models/equipment.filter.dto';
+import { EquipmentTypeEnum } from '@models/enum/equipment.enums';
+import { SupplyEnum } from '@models/enum/equipment.enums';
+import { WeightEnum } from '@models/enum/equipment.enums';
 
 type FilterKey = 'equipmentType' | 'supply' | 'weight';
 

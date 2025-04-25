@@ -9,9 +9,26 @@
     <div *ngFor="let type of equipmentTypes">
       <mat-form-field appearance="fill" class="equipment-select">
         <mat-label>{{ type }}</mat-label>
-        <mat-select [(ngModel)]="localEquipments[type]" (selectionChange)="emitUpdate()">
+        <mat-select
+          [(ngModel)]="localEquipments[type]"
+          (selectionChange)="
+      emitUpdate();
+      applyAuthorizationColors()
+    "
+          panelClass="auth-panel-{{ type }}">      <!-- facultatif, si tu veux cibler le panel -->
+
+          <!-- Option “vide” -->
           <mat-option value="">Aucune sélection</mat-option>
-          <mat-option *ngFor="let option of availableEquipments[type]" [value]="option">
+
+          <!-- Tes vraies options -->
+          <mat-option
+            *ngFor="let option of availableEquipments[type]"
+            [value]="option"
+            [ngClass]="{
+        'warn-option': authorizationColors[type]?.[option] === 'warn',
+        'accent-option': authorizationColors[type]?.[option] === 'accent'
+      }"
+          >
             {{ option }}
           </mat-option>
         </mat-select>
